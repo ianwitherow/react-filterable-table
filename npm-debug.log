@@ -1,0 +1,130 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/nodejs', '/usr/local/bin/npm', 'publish' ]
+2 info using npm@3.10.8
+3 info using node@v6.9.1
+4 verbose publish [ '.' ]
+5 silly cache add args [ '.', null ]
+6 verbose cache add spec .
+7 silly cache add parsed spec Result {
+7 silly cache add   raw: '.',
+7 silly cache add   scope: null,
+7 silly cache add   escapedName: null,
+7 silly cache add   name: null,
+7 silly cache add   rawSpec: '.',
+7 silly cache add   spec: '/mnt/c/temp/react/filterable-table',
+7 silly cache add   type: 'directory' }
+8 verbose addLocalDirectory /root/.npm/react-filterable-table/0.1.0/package.tgz not in flight; packing
+9 verbose correctMkdir /root/.npm correctMkdir not in flight; initializing
+10 info lifecycle react-filterable-table@0.1.0~prepublish: react-filterable-table@0.1.0
+11 silly lifecycle react-filterable-table@0.1.0~prepublish: no script for prepublish, continuing
+12 verbose tar pack [ '/root/.npm/react-filterable-table/0.1.0/package.tgz',
+12 verbose tar pack   '/mnt/c/temp/react/filterable-table' ]
+13 verbose tarball /root/.npm/react-filterable-table/0.1.0/package.tgz
+14 verbose folder /mnt/c/temp/react/filterable-table
+15 verbose addLocalTarball adding from inside cache /root/.npm/react-filterable-table/0.1.0/package.tgz
+16 verbose correctMkdir /root/.npm correctMkdir not in flight; initializing
+17 silly cache afterAdd react-filterable-table@0.1.0
+18 verbose afterAdd /root/.npm/react-filterable-table/0.1.0/package/package.json not in flight; writing
+19 verbose correctMkdir /root/.npm correctMkdir not in flight; initializing
+20 verbose afterAdd /root/.npm/react-filterable-table/0.1.0/package/package.json written
+21 silly publish { name: 'react-filterable-table',
+21 silly publish   version: '0.1.0',
+21 silly publish   description: 'Extendable table with filtering, sorting, paging, and more',
+21 silly publish   main: 'gulpfile.js',
+21 silly publish   scripts: { test: 'echo "Error: no test specified" && exit 1' },
+21 silly publish   repository:
+21 silly publish    { type: 'git',
+21 silly publish      url: 'git+https://github.com/ianwitherow/react-filterable-table.git' },
+21 silly publish   keywords:
+21 silly publish    [ 'react',
+21 silly publish      'table',
+21 silly publish      'filter',
+21 silly publish      'filterable',
+21 silly publish      'sort',
+21 silly publish      'sortable',
+21 silly publish      'json' ],
+21 silly publish   dependencies: { axios: '^0.15.3', 'react-pager': '^1.2.1' },
+21 silly publish   peerDependencies:
+21 silly publish    { react: '>=0.14.0 || >=15.0.0',
+21 silly publish      'react-dom': '>=0.14.0 || >=15.0.0' },
+21 silly publish   devDependencies:
+21 silly publish    { 'babel-core': '^6.7.7',
+21 silly publish      'babel-loader': '^6.2.4',
+21 silly publish      'babel-plugin-transform-object-rest-spread': '^6.16.0',
+21 silly publish      'babel-preset-es2015': '^6.18.0',
+21 silly publish      'babel-preset-react': '^6.16.0',
+21 silly publish      'babel-register': '^6.18.0',
+21 silly publish      gulp: '^3.9.0',
+21 silly publish      'gulp-less': '^3.3.0',
+21 silly publish      'gulp-uglify': '^1.5.1',
+21 silly publish      'gulp-util': '^3.0.7',
+21 silly publish      webpack: '^1.13.0' },
+21 silly publish   homepage: 'https://github.com/ianwitherow/react-filterable-table',
+21 silly publish   author: { name: 'Ian Witherow' },
+21 silly publish   license: 'MIT',
+21 silly publish   readme: '# react-filterable-table\r\nExtendable table with filtering, sorting, paging, and more.\r\n\r\n[Working example](https://ianwitherow.github.io/react-filterable-table/example/index.html)\r\n\r\nBasic usage:\r\n\r\n```\r\nlet data = [\r\n\t{ name: "Steve", age: 27, job: "Sandwich Eater" },\r\n\t{ name: "Gary", age: 35, job: "Falafeler" },\r\n\t{ name: "Greg", age: 24, job: "Jelly Bean Juggler" },\r\n\t{ name: "Jeb", age: 39, job: "Burrito Racer" },\r\n\t{ name: "Jeff", age: 48, job: "Hot Dog Wrangler" }\r\n];\r\n\r\nlet fields = [\r\n\t{ name: \'name\', displayName: "Name", inputFilterable: true, sortable: true },\r\n\t{ name: \'age\', displayName: "Age", inputFilterable: true, exactFilterable: true, sortable: true },\r\n\t{ name: \'job\', displayName: "Occupation", inputFilterable: true, exactFilterable: true, sortable: true }\r\n];\r\n\r\n<FilterableTable\r\n\tnamespace="People"\r\n\tinitialSort="name"\r\n\tdata={data}\r\n\tfields={fields}\r\n\tnoRecordsMessage="There are no people to display"\r\n\tnoFilteredRecordsMessage="No people match your filters!"\r\n\tfields={this.fields}\r\n/>\r\n\r\n```\r\n\r\n## Props\r\n\r\n* `namespace` - `string` - The app saves settings (currently only page size) to localStorage. Namespace prevents overriding settings from other pages/apps where this is used.\r\n* `className` - `string` - Class name to apply to the component\'s root &lt;div&gt; element.\r\n* `tableClassName` - `string` - Class name to apply to the component\'s &lt;table&gt; element.\r\n* `initialSort` - `string` - The field name on which to sort on initially.\r\n* `initialSortDir` - `bool` - The sort direction to use initially - true is ascending, false is descending.\r\n* `data` - `array` - Static data to bind to.\r\n* `dataEndpoint` - `string` - If not using a static dataset, this can be used to fetch data with AJAX.\r\n* `onDataReceived` - `fn` - This is called (passing the array of data) before the data is rendered. Any necessary data transformations (date parsing, etc) can be done here.\r\n* `fields` - `array` - Array of `field`s used for building the table. These fields have their own list of props detailed below.\r\n* `noRecordsMessage` - `string` - Message to show when there are no records.\r\n* `noFilteredRecordsMessage` - `string` - Message to show when the user has applied filters which result in no records to show.\r\n* `recordCountName` - `string` - Verbage to use at the top where it says "X results". For example, "1 giraffe"\r\n* `recordCountNamePlural` - `string` - Verbage to use when there are more than 1 results (or 0). For example, "3 giraffes"\r\n* `headerVisible` - `bool` - Whether or not to show the header\r\n* `pagersVisible` - `bool` - Whether or not to show the pagers\r\n\r\n\r\n## `field` Props\r\n\r\n* `name` - `string` - Name of the property on the `data` object\r\n* `displayName` - `string` - Field name as it will appear in the table header. If ommitted, `name` is used.\r\n* `inputFilterable` - `bool` - Whether or not this field should be filtered when the user types in the Filter text box at the top.\r\n* `exactFilterable` - `bool` - Whether or not the user can click the field\'s value to filter on it exactly.\r\n* `sortable` - `bool` - Whether or not the user can sort on this field.\r\n* `visible` - `bool` - Whether or not the field is visible.\r\n* `thClassName` - `string` - Class name of the &lt;th&gt; element.\r\n* `tdClassName` - `string` - Class name of the &lt;td&gt; element.\r\n* `emptyDisplay` - `string` - Text to show when the field is empty, for example "---" or "Not Set".\r\n* `render` - `fn` - Function called to render the field. Function is passed a `props` object which contains: `props.value` - the value of the field from the `data` object, and `props.field` - this field object (will add an example of this).\r\n\r\n\r\n## Example using a `render` function\r\n\r\n```\r\nlet renderAge = (props) => {\r\n\t/*\r\n\t * This props object looks like this:\r\n\t * {\r\n\t *   value:  (value of the field in the data. In this case, it\'s the person\'s age.),\r\n\t *   record: (the data record for the whole row, in this case it\'d be: { name: "Steve", age: 27, job: "Sandwich Eater" }),\r\n\t *   field:  (the same field object that this render function was passed into. We\'ll have access to any props on it, including that \'someRandomProp\' one we put on there. Those can be functions, too, so we can add custom onClick handlers to our return value.)\r\n\t * }\r\n\t */\r\n\r\n\t// If they are over 60, use the "blind" icon, otherwise use a motorcycle\r\n\tlet iconClassName = "fa fa-" + (props.value > 60 ? "fa-blind" : "fa-motorcycle");\r\n\tlet personName = props.record.name;\r\n\r\n\treturn (\r\n\t\t<span title={personName + "\'s Age"}>\r\n\t\t\t{props.value} <span className={iconClassName}></span>\r\n\t\t</span>\r\n\t);\r\n};\r\n\r\n\r\nlet data = [\r\n\t...\r\n\t{ name: "Steve", age: 27, job: "Sandwich Eater" },\r\n\t...\r\n];\r\n\r\nlet fields = [\r\n\t...\r\n\t{ name: \'age\', displayName: "Age", inputFilterable: true, exactFilterable: true, sortable: true, someRandomProp: "Tacos!", render: renderAge },\r\n\t...\r\n]\r\n```\r\n',
+21 silly publish   readmeFilename: 'README.md',
+21 silly publish   gitHead: '4567b2ddd8798b26702f648e1d376bbaabef35dd',
+21 silly publish   bugs: { url: 'https://github.com/ianwitherow/react-filterable-table/issues' },
+21 silly publish   _id: 'react-filterable-table@0.1.0',
+21 silly publish   _shasum: '21f5f395fe2ccf19a9db4fc9ef86d7c311bf4a91',
+21 silly publish   _from: '.' }
+22 verbose getPublishConfig undefined
+23 silly mapToRegistry name react-filterable-table
+24 silly mapToRegistry using default registry
+25 silly mapToRegistry registry https://registry.npmjs.org/
+26 silly mapToRegistry data Result {
+26 silly mapToRegistry   raw: 'react-filterable-table',
+26 silly mapToRegistry   scope: null,
+26 silly mapToRegistry   escapedName: 'react-filterable-table',
+26 silly mapToRegistry   name: 'react-filterable-table',
+26 silly mapToRegistry   rawSpec: '',
+26 silly mapToRegistry   spec: 'latest',
+26 silly mapToRegistry   type: 'tag' }
+27 silly mapToRegistry uri https://registry.npmjs.org/react-filterable-table
+28 verbose publish registryBase https://registry.npmjs.org/
+29 silly publish uploading /root/.npm/react-filterable-table/0.1.0/package.tgz
+30 verbose request uri https://registry.npmjs.org/react-filterable-table
+31 verbose request sending authorization for write operation
+32 info attempt registry request try #1 at 2:55:43 PM
+33 verbose request using bearer token for auth
+34 verbose request id 0b71d591bb71dc04
+35 http request PUT https://registry.npmjs.org/react-filterable-table
+36 http 403 https://registry.npmjs.org/react-filterable-table
+37 verbose headers { 'content-type': 'application/json',
+37 verbose headers   'cache-control': 'max-age=300',
+37 verbose headers   'content-length': '95',
+37 verbose headers   'accept-ranges': 'bytes',
+37 verbose headers   date: 'Tue, 31 Jan 2017 21:55:52 GMT',
+37 verbose headers   via: '1.1 varnish',
+37 verbose headers   connection: 'keep-alive',
+37 verbose headers   'x-served-by': 'cache-den6024-DEN',
+37 verbose headers   'x-cache': 'MISS',
+37 verbose headers   'x-cache-hits': '0',
+37 verbose headers   'x-timer': 'S1485899751.556425,VS0,VE820',
+37 verbose headers   vary: 'Accept-Encoding' }
+38 verbose request invalidating /root/.npm/registry.npmjs.org/react-filterable-table on PUT
+39 error publish Failed PUT 403
+40 verbose stack Error: "You cannot publish over the previously published version 0.1.0." : react-filterable-table
+40 verbose stack     at makeError (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:302:12)
+40 verbose stack     at CachingRegistryClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:290:14)
+40 verbose stack     at Request._callback (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:210:14)
+40 verbose stack     at Request.self.callback (/usr/local/lib/node_modules/npm/node_modules/request/request.js:187:22)
+40 verbose stack     at emitTwo (events.js:106:13)
+40 verbose stack     at Request.emit (events.js:191:7)
+40 verbose stack     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1044:10)
+40 verbose stack     at emitOne (events.js:96:13)
+40 verbose stack     at Request.emit (events.js:188:7)
+40 verbose stack     at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:965:12)
+41 verbose statusCode 403
+42 verbose pkgid react-filterable-table
+43 verbose cwd /mnt/c/temp/react/filterable-table
+44 error Linux 4.4.0-43-Microsoft
+45 error argv "/usr/bin/nodejs" "/usr/local/bin/npm" "publish"
+46 error node v6.9.1
+47 error npm  v3.10.8
+48 error code E403
+49 error "You cannot publish over the previously published version 0.1.0." : react-filterable-table
+50 error If you need help, you may report this error at:
+50 error     <https://github.com/npm/npm/issues>
+51 verbose exit [ 1, true ]
