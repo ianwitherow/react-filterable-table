@@ -1,6 +1,8 @@
 # react-filterable-table
 Extendable table with filtering, sorting, paging, and more.
 
+[Working example](https://ianwitherow.github.io/react-filterable-table/example/index.html)
+
 Basic usage:
 
 ```
@@ -29,3 +31,4 @@ let fields = [
 />
 
 ```
+
