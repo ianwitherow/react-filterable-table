@@ -3,6 +3,22 @@
   "version": "0.1.0",
   "description": "Extendable table with filtering, sorting, paging, and more",
   "main": "gulpfile.js",
+  "scripts": {
+	  "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+	  "type": "git",
+	  "url": "https://github.com/ianwitherow/react-filterable-table.git"
+  },
+  "keywords": [
+	  "react",
+	  "table",
+	  "filter",
+	  "filterable",
+	  "sort",
+	  "sortable",
+	  "json"
+  ],
   "dependencies": {
     "axios": "^0.15.3",
     "react": "^15.1.0",
@@ -22,6 +38,7 @@
     "gulp-util": "^3.0.7",
     "webpack": "^1.13.0"
   },
+  "homepage": "https://github.com/ianwitherow/react-filterable-table",
   "author": "Ian Witherow",
   "license": "MIT"
 }
