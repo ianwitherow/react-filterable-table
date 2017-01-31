@@ -35,8 +35,8 @@ let fields = [
 ## Props
 
 * `namespace` - (string) The app saves settings (currently only page size) to localStorage. Namespace prevents overriding settings from other pages/apps where this is used.
-* `className` - (string) Class name to apply to the component's root <div> element.
-* `tableClassName` - (string) Class name to apply to the component's <table> element.
+* `className` - (string) Class name to apply to the component's root &lt;div&gt; element.
+* `tableClassName` - (string) Class name to apply to the component's &lt;table&gt; element.
 * `initialSort` - (string) The field name on which to sort on initially.
 * `initialSortDir` - (bool) The sort direction to use initially - true is ascending, false is descending.
 * `data` - (array) Static data to bind to.
@@ -59,8 +59,8 @@ let fields = [
 * `exactFilterable` - (bool) Whether or not the user can click the field's value to filter on it exactly.
 * `sortable` - (bool) Whether or not the user can sort on this field.
 * `visible` - (bool) Whether or not the field is visible.
-* `thClassName` - (string) Class name of the <th> element.
-* `tdClassName` - (string) Class name of the <td> element.
+* `thClassName` - (string) Class name of the &lt;th&gt; element.
+* `tdClassName` - (string) Class name of the &lt;td&gt; element.
 * `emptyDisplay` - (string) Text to show when the field is empty, for example "---" or "Not Set".
 * `render` - (function) Function called to render the field. Function is passed a `props` object which contains: `props.value` - the value of the field from the `data` object, and `props.field` - this field object (will add an example of this).
 
