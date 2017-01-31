@@ -98,7 +98,7 @@ let data = [
 
 let fields = [
 ...
-	{ name: 'age', displayName: "Age", inputFilterable: true, exactFilterable: true, sortable: true, someRandomProp: "Tacos!" },
+	{ name: 'age', displayName: "Age", inputFilterable: true, exactFilterable: true, sortable: true, someRandomProp: "Tacos!", render: renderAge },
 ...
 ]
 ```
