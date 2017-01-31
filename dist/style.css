@@ -1,0 +1,74 @@
+.filterable-table-container .header-row {
+  margin-top: 6px;
+}
+.filterable-table-container .header-row .exact-filters {
+  margin-top: 20px;
+}
+.filterable-table-container .header-row .record-count {
+  padding-top: 7px;
+}
+.filterable-table-container table.filterable-table thead tr th {
+  white-space: nowrap;
+  user-select: none;
+}
+.filterable-table-container table.filterable-table thead tr th span.fa {
+  padding-left: 8px;
+  color: #aaa;
+}
+.filterable-table-container table.filterable-table tfoot tr td {
+  font-weight: 700;
+}
+.filterable-table-container .filter-container {
+  position: relative;
+}
+.filterable-table-container .filter-container .filter-input,
+.filterable-table-container .filter-container .page-size {
+  width: 185px;
+  display: inline;
+}
+.filterable-table-container .clear-filter {
+  position: absolute;
+  right: 5px;
+  top: 1px;
+}
+.filterable-table-container span.sortable,
+.filterable-table-container span.filterable {
+  cursor: pointer;
+}
+.filterable-table-container span.filterable {
+  border-bottom: 1px solid #91c1ff;
+  white-space: nowrap;
+}
+.filterable-table-container ul.pagination li a {
+  user-select: none;
+}
+.filterable-table-container ul.pagination li:not(.disabled) a {
+  cursor: pointer;
+}
+.filterable-table-container span.empty {
+  font-style: italic;
+  color: #999;
+}
+.filterable-table-container .filter-item {
+  border: 1px solid #ccc;
+  border-radius: 1px;
+  display: inline-block;
+  margin-right: 15px;
+}
+.filterable-table-container .filter-item .filter-item-title {
+  background-color: #2f6e9b;
+  border-radius: 1px;
+  color: #fff;
+}
+.filterable-table-container .filter-item .filter-item-title .filter-item-remove {
+  color: #fff;
+  font-weight: 700;
+  user-select: none;
+  padding-right: 10px;
+  cursor: pointer;
+}
+.filterable-table-container .filter-item .filter-item-title,
+.filterable-table-container .filter-item .filter-item-value {
+  padding: 5px 10px;
+  display: inline-block;
+}

@@ -1,0 +1,96 @@
+.filterable-table-container {
+	.header-row {
+		margin-top: 6px;
+
+		& .exact-filters {
+			margin-top: 20px;
+		}
+
+		& .record-count {
+			padding-top: 7px;
+		}
+	}
+
+
+	table.filterable-table thead tr th {
+		white-space: nowrap;
+		user-select: none;
+
+		& span.fa {
+			padding-left: 8px;
+			color: #aaa;
+		}
+	}
+
+	table.filterable-table tfoot tr td {
+		font-weight: 700;
+	}
+
+	.filter-container {
+		position: relative;
+
+		& .filter-input, .page-size {
+			width: 185px;
+			display: inline;
+		}
+	}
+
+	.clear-filter {
+		position: absolute;
+		right: 5px;
+		top: 1px;
+	}
+
+	span.sortable, span.filterable {
+		cursor: pointer;
+	}
+
+	span.filterable {
+		border-bottom: 1px solid #91c1ff;
+		white-space: nowrap;
+	}
+
+
+	ul.pagination {
+		& li a {
+			user-select: none;
+		}
+		& li:not(.disabled) a {
+			cursor: pointer;
+		}
+	}
+
+
+	span.empty {
+		font-style: italic;
+		color: #999;
+	}
+
+	.filter-item {
+	  border: 1px solid #ccc;
+	  border-radius: 1px;
+	  display: inline-block;
+	  margin-right: 15px;
+
+		& .filter-item-title {
+		  background-color: #2f6e9b;
+		  border-radius: 1px;
+		  color: #fff;
+
+			& .filter-item-remove {
+			  color: #fff;
+			  font-weight: 700;
+			  user-select: none;
+			  padding-right: 10px;
+			  cursor: pointer;
+			}
+		}
+
+		& .filter-item-title,
+		& .filter-item-value {
+		  padding: 5px 10px;
+		  display: inline-block;
+		}
+	}
+
+}
