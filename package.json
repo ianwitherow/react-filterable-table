@@ -1,11 +1,10 @@
 {
   "name": "react-filterable-table",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Extendable table with filtering, sorting, paging, and more",
   "main": "gulpfile.js",
   "dependencies": {
     "axios": "^0.15.3",
-    "jquery": "^2.1.4",
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
     "react-pager": "git+https://github.com/ianwitherow/pager.git"
@@ -24,5 +23,5 @@
     "webpack": "^1.13.0"
   },
   "author": "Ian Witherow",
-  "license": "ISC"
+  "license": "MIT"
 }
