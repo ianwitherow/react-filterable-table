@@ -1,12 +1,13 @@
 const path = require('path');
 const webpack = require('webpack')
 
+let entry = {};
+entry['react-filterable-table'] = [path.resolve(__dirname, 'src/Components/FilterableTable')];
+entry['example'] = [path.resolve(__dirname, 'example/js/app')];
+
 module.exports = {
 	context: path.resolve(__dirname),
-	entry: {
-		filterableTable: [path.resolve(__dirname, 'src/Components/FilterableTable')],
-		example: [path.resolve(__dirname, 'example/js/app')]
-	},
+	entry: entry,
 	output: {
 		path: path.join(__dirname, 'dist'),
 		filename: '[name].min.js'
@@ -34,9 +35,18 @@ module.exports = {
 			'process.env': {
 				'NODE_ENV': JSON.stringify('production')
 			}
+		}),
+		new webpack.optimize.UglifyJsPlugin({
+			compress: { warnings: false }
 		})
-		//new webpack.optimize.UglifyJsPlugin({
-			//compress: { warnings: false }
-		//})
-	]
+	],
+	node: {
+		Buffer: false
+	},
+	output: {
+		library: 'FilterableTable',
+		libraryTarget: 'var',
+		path: 'dist',
+		filename: '[name].min.js',
+	},
 }
