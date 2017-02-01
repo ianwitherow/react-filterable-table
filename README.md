@@ -1,5 +1,6 @@
 # react-filterable-table
 Extendable table with filtering, sorting, paging, and more.
+
 [![NPM](https://nodei.co/npm/react-filterable-table.png?compact=true)](https://npmjs.org/package/react-filterable-table)
 
 [Working example](https://ianwitherow.github.io/react-filterable-table/example/index.html)
