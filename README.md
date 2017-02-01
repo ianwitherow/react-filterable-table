@@ -9,7 +9,7 @@ Extendable table with filtering, sorting, paging, and more.
 ## Install
 `npm install react-filterable-table`
 
-Basic usage:
+## Basic usage:
 
 ```
 let FilterableTable = require('react-filterable-table');
@@ -113,4 +113,5 @@ let fields = [
 
 ## Building
 To build the main library: `gulp build`
+
 To build the example: `gulp example`
