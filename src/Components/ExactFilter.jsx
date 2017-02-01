@@ -1,3 +1,4 @@
+import React from 'react';
 
 class ExactFilter extends React.Component {
 	constructor(props) {

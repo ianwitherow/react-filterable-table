@@ -1,3 +1,4 @@
+import React from 'react';
 let ExactFilter = require('./ExactFilter');
 
 class ExactFilters extends React.Component {

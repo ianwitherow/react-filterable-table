@@ -1,4 +1,5 @@
-﻿import ExactFilters from './ExactFilters'; 
+﻿import React from 'react';
+import ExactFilters from './ExactFilters'; 
 
 class Header extends React.Component {
 	constructor(props) {

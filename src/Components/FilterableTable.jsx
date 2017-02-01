@@ -1,4 +1,5 @@
-﻿import Table from './Table';
+﻿import React from 'react';
+import Table from './Table';
 import Header from './Header';
 import Pager from 'react-pager';
 import FilterAndSort from '../Helpers/FilterAndSort';

@@ -1,11 +1,18 @@
 # react-filterable-table
 Extendable table with filtering, sorting, paging, and more.
+[![NPM](https://nodei.co/npm/react-filterable-table.png?compact=true)](https://npmjs.org/package/react-filterable-table)
 
 [Working example](https://ianwitherow.github.io/react-filterable-table/example/index.html)
+
+
+## Install
+`npm install react-filterable-table`
 
 Basic usage:
 
 ```
+let FilterableTable = require('react-filterable-table');
+
 let data = [
 	{ name: "Steve", age: 27, job: "Sandwich Eater" },
 	{ name: "Gary", age: 35, job: "Falafeler" },
@@ -102,3 +109,7 @@ let fields = [
 	...
 ]
 ```
+
+## Building
+To build the main library: `gulp build`
+To build the example: `gulp example`

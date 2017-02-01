@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require('webpack')
 
 let entry = {};
-entry['react-filterable-table'] = [path.resolve(__dirname, 'src/index.js')];
+entry['example'] = [path.resolve(__dirname, 'example/js/app')];
 
 module.exports = {
 	context: path.resolve(__dirname),
@@ -33,8 +33,10 @@ module.exports = {
 		extensions: ['', '.js', '.jsx']
 	},
 	externals: {
-		'react': 'commonjs react',
-		'react-dom': 'commonjs react-dom'
+		// Use external version of React (from CDN for client-side, or
+		// bundled with ReactJS.NET for server-side)
+		'react': 'React',
+		'react-dom': 'ReactDOM'
 	},
 	plugins: [
 		new webpack.DefinePlugin({
@@ -45,14 +47,5 @@ module.exports = {
 		new webpack.optimize.UglifyJsPlugin({
 			compress: { warnings: false }
 		})
-	],
-	node: {
-		Buffer: false
-	},
-	output: {
-		path: path.join(__dirname, 'dist'),
-		filename: '[name].js',
-		libraryTarget: 'umd',
-		library: 'FilterableTable'
-	}
+	]
 }
