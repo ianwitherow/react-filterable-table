@@ -1,2 +1,9 @@
 src
 dist/example.js
+example
+.babelrc
+.gitignore
+gulpfile
+npm-debug.log
+webpack.config.js
+webpack.example.config.js

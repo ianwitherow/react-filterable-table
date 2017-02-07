@@ -7,6 +7,7 @@ class Table extends React.Component {
 	}
 
 	headerSortClassName(field) {
+		// Return the class name for the sort icon
 		if (field.sortable) {
 			if (this.props.sort === field.name || this.props.sort === field.sortFieldName) {
 				if (this.props.sortDir) {
@@ -29,13 +30,15 @@ class Table extends React.Component {
 			visible
 		} = this.props;
 
-		// Paging - slice array based on what should be shown
+		// Paging - determine indexes for where to slice the array
 		const startIndex = page * pageSize;
 		const endIndex = startIndex + pageSize;
 
+		// Slice array based on what should be shown on the current page
 		const records = this.props.records.slice(startIndex, endIndex);
+
+		// If the field has the visible property set to false, ignore it
 		const fields = this.props.fields.filter(field => {
-			// If the field has the visible property set to false, ignore it
 			return field.visible !== false;
 		});
 
@@ -53,10 +56,11 @@ class Table extends React.Component {
 			const tableTds = fields.map((field, q) => {
 				let recordBody = record[field.name];
 				let spanClassName = field.exactFilterable && record[field.name] ? "filterable " : "";
+				// Give the field's render function (if supplied) access to ALL the things!
 				const renderProps = { value: record[field.name], record, field, ...this.props };
 
 				// Build out the body of the <td>
-				if (field.render) {
+				if (field.render && typeof field.render === "function") {
 					// This field has a render function; call it with our props
 					recordBody = field.render(renderProps);
 				} else {

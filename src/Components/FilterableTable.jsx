@@ -41,7 +41,9 @@ class FilterableTable extends React.Component {
 		// Set defaults if values weren't passed in
 		return {
 			noRecordsMessage: "There are no records to display",
-			noFilteredRecordsMessage: "There are no records to display"
+			noFilteredRecordsMessage: "There are no records to display",
+			stickySorting: false,
+			namespace: "react-filterable-table"
 		}
 	}
 
@@ -61,7 +63,11 @@ class FilterableTable extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		this.setData(nextProps.data);
+		// If the `data` prop changes, make sure we run our onDataReceived callback (if supplied)
+		// and set our states
+		if (nextProps.hasOwnProperty('data')) {
+			this.setData(nextProps.data);
+		}
 	}
 
 	loadData(e) {
@@ -233,6 +239,7 @@ class FilterableTable extends React.Component {
 			exactFilters: this.state.exactFilters,
 			sort: this.state.sort,
 			sortDir: this.state.sortDir,
+			stickySorting: this.props.stickySorting,
 			fields: this.props.fields
 		});
 

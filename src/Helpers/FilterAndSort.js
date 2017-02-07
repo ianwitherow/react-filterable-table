@@ -4,6 +4,7 @@ function FilterAndSort(array, options) {
 			exactFilters,
 			sort,
 			sortDir,
+			stickySorting,
 			fields
 		} = options;
 
@@ -47,28 +48,31 @@ function FilterAndSort(array, options) {
 				let recordA = a[sort];
 				let recordB = b[sort];
 
-				// Special rules for sorting different data types
-				// Empty things should always sort last
-				if (typeof a[sort] === "string" || typeof b[sort] === "string") {
-					// If desc, set it to 0 so it ends up at the end.
-					// If asc, set to a bunch of zzzz so it ends up at the end.
-					let emptySortCompare = !sortDir ? "0" : "zzzzzzzzzzzz";
-					// For strings, set both to lowercase for comparison
-					recordA = a[sort] && a[sort].length > 0 ? a[sort].toLowerCase() : emptySortCompare;
-					recordB = b[sort] && b[sort].length > 0 ? b[sort].toLowerCase() : emptySortCompare;
-				} else if ((a[sort] && typeof a[sort].getMonth === "function") || b[sort] && typeof b[sort].getMonth === "function") {
-					// For dates, we'll need different "emptySortCompare" values
-					// If desc, set to some really early date, like 1/1/1000.
-					// If asc, set to some really late date, like 1/1/2999.
-					let emptySortCompare = !sortDir ? new Date("1/1/1000") : new Date("1/1/2999");
-					recordA = a[sort] || emptySortCompare;
-					recordB = b[sort] || emptySortCompare;
-				} else if (typeof a[sort] === "number" || typeof b[sort] === "number") {
-					// If desc, set to negative infinity
-					// If asc, set to positive infinity
-					let emptySortCompare = !sortDir ? -Infinity : Infinity;
-					recordA = a[sort] !== null ? a[sort] : emptySortCompare;
-					recordB = b[sort] !== null ? b[sort] : emptySortCompare;
+				if (stickySorting) {
+
+					// Special rules for sorting different data types
+					// Empty things should always sort last
+					if (typeof a[sort] === "string" || typeof b[sort] === "string") {
+						// If desc, set it to 0 so it ends up at the end.
+						// If asc, set to a bunch of zzzz so it ends up at the end.
+						let emptySortCompare = !sortDir ? "0" : "zzzzzzzzzzzz";
+						// For strings, set both to lowercase for comparison
+						recordA = a[sort] && a[sort].length > 0 ? a[sort].toLowerCase() : emptySortCompare;
+						recordB = b[sort] && b[sort].length > 0 ? b[sort].toLowerCase() : emptySortCompare;
+					} else if ((a[sort] && typeof a[sort].getMonth === "function") || b[sort] && typeof b[sort].getMonth === "function") {
+						// For dates, we'll need different "emptySortCompare" values
+						// If desc, set to some really early date, like 1/1/1000.
+						// If asc, set to some really late date, like 1/1/2999.
+						let emptySortCompare = !sortDir ? new Date("1/1/1000") : new Date("1/1/2999");
+						recordA = a[sort] || emptySortCompare;
+						recordB = b[sort] || emptySortCompare;
+					} else if (typeof a[sort] === "number" || typeof b[sort] === "number") {
+						// If desc, set to negative infinity
+						// If asc, set to positive infinity
+						let emptySortCompare = !sortDir ? -Infinity : Infinity;
+						recordA = a[sort] !== null ? a[sort] : emptySortCompare;
+						recordB = b[sort] !== null ? b[sort] : emptySortCompare;
+					}
 				}
 
 				if (sortDir) {
