@@ -43,9 +43,11 @@ class Table extends React.Component {
 		});
 
 		const headerCells = fields.map((field, i) => {
+			// Use the displayName property if supplied, otherwise use name
+			let fieldDisplayName = field.displayName !== undefined ? field.displayName : field.name;
 			return (
 				<th onClick={field.sortable ? () => updateSort(field.sortFieldName || field.name) : null} className={field.thClassName ? field.thClassName : null} key={i}>
-					<span className={field.sortable ? "sortable" : null}>{field.displayName || field.name}</span>
+					<span className={field.sortable ? "sortable" : null}>{fieldDisplayName}</span>
 					<span className={this.headerSortClassName(field)}></span>
 				</th>
 			);
@@ -54,6 +56,8 @@ class Table extends React.Component {
 		const rows = records.map((record, i) => {
 
 			const tableTds = fields.map((field, q) => {
+				// Use the displayName property if supplied, otherwise use name
+				let fieldDisplayName = field.displayName !== undefined ? field.displayName : field.name;
 				let recordBody = record[field.name];
 				let spanClassName = field.exactFilterable && record[field.name] ? "filterable " : "";
 				// Give the field's render function (if supplied) access to ALL the things!
@@ -78,7 +82,7 @@ class Table extends React.Component {
 
 				return (
 					<td className={field.tdClassName ? field.tdClassName : null} key={q}>
-						<span className={spanClassName} onClick={field.exactFilterable ? () => addExactFilter(record[field.name], field.name, (field.displayName || field.name)) : null}>
+						<span className={spanClassName} onClick={field.exactFilterable ? () => addExactFilter(record[field.name], field.name, (fieldDisplayName)) : null}>
 							{recordBody}
 						</span>
 					</td>
