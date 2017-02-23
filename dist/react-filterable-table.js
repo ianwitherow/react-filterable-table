@@ -2721,6 +2721,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 
 	function isElementInViewport(el) {
+	    if (el === undefined || el === null) {
+	        return false;
+	    }
 
 	    //special bonus for those using jQuery
 	    if (typeof jQuery === "function" && el instanceof jQuery) {
