@@ -58,24 +58,28 @@ class Table extends React.Component {
 			const tableTds = fields.map((field, q) => {
 				// Use the displayName property if supplied, otherwise use name
 				let fieldDisplayName = field.displayName !== undefined ? field.displayName : field.name;
-				let recordBody = record[field.name];
 				let spanClassName = field.exactFilterable && record[field.name] ? "filterable " : "";
 				// Give the field's render function (if supplied) access to ALL the things!
-				const renderProps = { value: record[field.name], record, field, ...this.props };
 
 				// Build out the body of the <td>
+				let recordBody = record[field.name];
+
+				// If this field has a render function, call it with some props
 				if (field.render && typeof field.render === "function") {
-					// This field has a render function; call it with our props
+					const renderProps = { value: record[field.name], record, field, ...this.props };
 					recordBody = field.render(renderProps);
-				} else {
-					// If the record is empty and the field has something set for emptyDisplay, use that as the text.
-					if (field.emptyDisplay && (!recordBody || recordBody.length === 0)) {
-						recordBody = field.emptyDisplay;
-					}
+				}
+
+				// Determine if the body is empty
+				let bodyIsEmpty = (recordBody === null || recordBody === undefined || recordBody.toString().length === 0);
+
+				// If the body is empty and the field has something set for emptyDisplay, use that as the text.
+				if (field.emptyDisplay && (bodyIsEmpty)) {
+					recordBody = field.emptyDisplay;
 				}
 
 				// add the "empty" classname if record is empty
-				if (!record[field.name] || record[field.name].length === 0) {
+				if (bodyIsEmpty) {
 					spanClassName += "empty"
 				}
 

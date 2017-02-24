@@ -70,8 +70,8 @@ function FilterAndSort(array, options) {
 						// If desc, set to negative infinity
 						// If asc, set to positive infinity
 						let emptySortCompare = !sortDir ? -Infinity : Infinity;
-						recordA = a[sort] !== null ? a[sort] : emptySortCompare;
-						recordB = b[sort] !== null ? b[sort] : emptySortCompare;
+						recordA = a[sort] !== null && a[sort] !== undefined ? a[sort] : emptySortCompare;
+						recordB = b[sort] !== null && b[sort] !== undefined ? b[sort] : emptySortCompare;
 					}
 				}
 

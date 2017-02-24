@@ -544,24 +544,28 @@ return /******/ (function(modules) { // webpackBootstrap
 					var tableTds = fields.map(function (field, q) {
 						// Use the displayName property if supplied, otherwise use name
 						var fieldDisplayName = field.displayName !== undefined ? field.displayName : field.name;
-						var recordBody = record[field.name];
 						var spanClassName = field.exactFilterable && record[field.name] ? "filterable " : "";
 						// Give the field's render function (if supplied) access to ALL the things!
-						var renderProps = _extends({ value: record[field.name], record: record, field: field }, _this2.props);
 
 						// Build out the body of the <td>
+						var recordBody = record[field.name];
+
+						// If this field has a render function, call it with some props
 						if (field.render && typeof field.render === "function") {
-							// This field has a render function; call it with our props
+							var renderProps = _extends({ value: record[field.name], record: record, field: field }, _this2.props);
 							recordBody = field.render(renderProps);
-						} else {
-							// If the record is empty and the field has something set for emptyDisplay, use that as the text.
-							if (field.emptyDisplay && (!recordBody || recordBody.length === 0)) {
-								recordBody = field.emptyDisplay;
-							}
+						}
+
+						// Determine if the body is empty
+						var bodyIsEmpty = recordBody === null || recordBody === undefined || recordBody.toString().length === 0;
+
+						// If the body is empty and the field has something set for emptyDisplay, use that as the text.
+						if (field.emptyDisplay && bodyIsEmpty) {
+							recordBody = field.emptyDisplay;
 						}
 
 						// add the "empty" classname if record is empty
-						if (!record[field.name] || record[field.name].length === 0) {
+						if (bodyIsEmpty) {
 							spanClassName += "empty";
 						}
 
@@ -1004,8 +1008,8 @@ return /******/ (function(modules) { // webpackBootstrap
 						// If desc, set to negative infinity
 						// If asc, set to positive infinity
 						var _emptySortCompare2 = !sortDir ? -Infinity : Infinity;
-						recordA = a[sort] !== null ? a[sort] : _emptySortCompare2;
-						recordB = b[sort] !== null ? b[sort] : _emptySortCompare2;
+						recordA = a[sort] !== null && a[sort] !== undefined ? a[sort] : _emptySortCompare2;
+						recordB = b[sort] !== null && b[sort] !== undefined ? b[sort] : _emptySortCompare2;
 					}
 				}
 
