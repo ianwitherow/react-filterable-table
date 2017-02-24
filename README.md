@@ -64,6 +64,7 @@ let fields = [
 
 * `name` - `string` - Name of the property on the `data` object
 * `displayName` - `string` - Field name as it will appear in the table header. If ommitted, `name` is used.
+* `sortFieldName` - `string` - Field to use when sorting if you want to sort using a different value from what's displayed. For example, A+, A, B, C would normally sort as A, A+, B, C. You could have a separate field that maps those values to an integer, then use that field for sorting.
 * `inputFilterable` - `bool` - Whether or not this field should be filtered when the user types in the Filter text box at the top.
 * `exactFilterable` - `bool` - Whether or not the user can click the field's value to filter on it exactly.
 * `sortable` - `bool` - Whether or not the user can sort on this field.
