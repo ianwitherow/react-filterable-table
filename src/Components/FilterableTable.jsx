@@ -209,7 +209,7 @@ class FilterableTable extends React.Component {
 
 	scrollIntoView() {
 		// Make sure things are in view
-		let table = document.querySelector('table.filterable-table');
+		let table = document.querySelector('table.filterable-table thead');
 		if (table && !isElementInViewport(table)) {
 			table.scrollIntoView();
 		}

@@ -325,7 +325,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			key: 'scrollIntoView',
 			value: function scrollIntoView() {
 				// Make sure things are in view
-				var table = document.querySelector('table.filterable-table');
+				var table = document.querySelector('table.filterable-table thead');
 				if (table && !(0, _isElementInViewport2.default)(table)) {
 					table.scrollIntoView();
 				}
