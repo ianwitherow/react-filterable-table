@@ -598,8 +598,8 @@ return /******/ (function(modules) { // webpackBootstrap
 				});
 
 				return rows.length === 0 ? _react2.default.createElement(
-					"p",
-					{ className: "well text-center" },
+					"div",
+					null,
 					this.props.noFilteredRecordsMessage || 'There are no records to display.'
 				) : _react2.default.createElement(
 					"div",

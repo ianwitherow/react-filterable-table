@@ -37,7 +37,6 @@
 }
 .filterable-table-container span.filterable {
   border-bottom: 1px solid #91c1ff;
-  white-space: nowrap;
 }
 .filterable-table-container ul.pagination li a {
   user-select: none;

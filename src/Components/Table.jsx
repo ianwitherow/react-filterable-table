@@ -111,7 +111,7 @@ class Table extends React.Component {
 
 		return (
 			rows.length === 0 ? 
-				(<p className="well text-center">{this.props.noFilteredRecordsMessage || 'There are no records to display.'}</p>)
+				(<div>{this.props.noFilteredRecordsMessage || 'There are no records to display.'}</div>)
 			:
 			<div>
 				<table className="table table-condensed table-hover filterable-table">
