@@ -43,7 +43,8 @@ class FilterableTable extends React.Component {
 			noRecordsMessage: "There are no records to display",
 			noFilteredRecordsMessage: "There are no records to display",
 			stickySorting: false,
-			namespace: "react-filterable-table"
+			namespace: "react-filterable-table",
+			tableClassName: "table table-condensed table-hover filterable-table"
 		}
 	}
 

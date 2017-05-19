@@ -108,13 +108,18 @@ class Table extends React.Component {
 			);
 		});
 
+		let tableClassName = this.props.className;
+		if (tableClassName.indexOf('filterable-table') === -1) {
+			// Make sure class 'filterable-table' is included
+			tableClassName += " filterable-table";
+		}
 
 		return (
 			rows.length === 0 ? 
 				(<div>{this.props.noFilteredRecordsMessage || 'There are no records to display.'}</div>)
 			:
 			<div>
-				<table className="table table-condensed table-hover filterable-table">
+				<table className={tableClassName}>
 					<thead>
 						<tr>
 							{headerCells}

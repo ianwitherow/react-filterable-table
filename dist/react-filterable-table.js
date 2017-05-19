@@ -431,7 +431,8 @@ return /******/ (function(modules) { // webpackBootstrap
 					noRecordsMessage: "There are no records to display",
 					noFilteredRecordsMessage: "There are no records to display",
 					stickySorting: false,
-					namespace: "react-filterable-table"
+					namespace: "react-filterable-table",
+					tableClassName: "table table-condensed table-hover filterable-table"
 				};
 			}
 		}]);
@@ -597,6 +598,12 @@ return /******/ (function(modules) { // webpackBootstrap
 					);
 				});
 
+				var tableClassName = this.props.className;
+				if (tableClassName.indexOf('filterable-table') === -1) {
+					// Make sure class 'filterable-table' is included
+					tableClassName += " filterable-table";
+				}
+
 				return rows.length === 0 ? _react2.default.createElement(
 					"div",
 					null,
@@ -606,7 +613,7 @@ return /******/ (function(modules) { // webpackBootstrap
 					null,
 					_react2.default.createElement(
 						"table",
-						{ className: "table table-condensed table-hover filterable-table" },
+						{ className: tableClassName },
 						_react2.default.createElement(
 							"thead",
 							null,
