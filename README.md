@@ -90,7 +90,7 @@ let renderAge = (props) => {
 	 */
 
 	// If they are over 60, use the "blind" icon, otherwise use a motorcycle
-	let iconClassName = "fa fa-" + (props.value > 60 ? "fa-blind" : "fa-motorcycle");
+	let iconClassName = "fa fa-" + (props.value > 60 ? "blind" : "motorcycle");
 	let personName = props.record.name;
 
 	return (
