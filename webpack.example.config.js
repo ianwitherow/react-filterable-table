@@ -3,6 +3,7 @@ const webpack = require('webpack')
 
 let entry = {};
 entry['example'] = [path.resolve(__dirname, 'example/js/app')];
+entry['example-alt'] = [path.resolve(__dirname, 'example-alt/js/app')];
 
 module.exports = {
 	context: path.resolve(__dirname),
