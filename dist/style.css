@@ -29,7 +29,7 @@
 .filterable-table-container .clear-filter {
   position: absolute;
   right: 5px;
-  top: 1px;
+  top: -3px;
 }
 .filterable-table-container span.sortable,
 .filterable-table-container span.filterable {
