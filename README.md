@@ -15,6 +15,7 @@ Extendable table with filtering, sorting, paging, and more.
 ```
 let FilterableTable = require('react-filterable-table');
 
+// Data for the table to display; can be anything
 let data = [
 	{ name: "Steve", age: 27, job: "Sandwich Eater" },
 	{ name: "Gary", age: 35, job: "Falafeler" },
@@ -23,6 +24,7 @@ let data = [
 	{ name: "Jeff", age: 48, job: "Hot Dog Wrangler" }
 ];
 
+// Fields to show in the table, and what object properties in the data they bind to
 let fields = [
 	{ name: 'name', displayName: "Name", inputFilterable: true, sortable: true },
 	{ name: 'age', displayName: "Age", inputFilterable: true, exactFilterable: true, sortable: true },
