@@ -1,9 +1,10 @@
 # react-filterable-table
 Extendable table with filtering, sorting, paging, and more.
 
-[![NPM](https://nodei.co/npm/react-filterable-table.png?compact=true)](https://npmjs.org/package/react-filterable-table)
 
-[Working example](https://ianwitherow.github.io/react-filterable-table/example/index.html)
+[Demo](https://ianwitherow.github.io/react-filterable-table/example/index.html)
+
+[![NPM](https://nodei.co/npm/react-filterable-table.png?compact=true)](https://npmjs.org/package/react-filterable-table)
 
 
 ## Install
@@ -72,7 +73,7 @@ let fields = [
 * `thClassName` - `string` - Class name of the &lt;th&gt; element.
 * `tdClassName` - `string` - Class name of the &lt;td&gt; element.
 * `emptyDisplay` - `string` - Text to show when the field is empty, for example "---" or "Not Set".
-* `render` - `fn` - Function called to render the field. Function is passed a `props` object which contains: `props.value` - the value of the field from the `data` object, and `props.field` - this field object (will add an example of this).
+* `render` - `fn` - Function called to render the field. Function is passed a `props` object which contains: `props.value` - the value of the field from the `data` object, and `props.field` - this field object ([Demo using field render functions](https://ianwitherow.github.io/react-filterable-table/example-alt/index.html)).
 
 
 ## Example using a `render` function
