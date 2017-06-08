@@ -4,7 +4,6 @@ const gutil = require('gulp-util');
 const webpack = require('webpack')
 const webpackConfig = require('./webpack.config.js');
 const webpackExampleConfig = require('./webpack.example.config.js');
-const webpackExampleAltConfig = require('./webpack.example-alt.config.js');
 const less = require('gulp-less');
 
 
@@ -37,17 +36,9 @@ gulp.task('example', function() {
 		}));
 		gulp.src('./dist/example.js')
 			.pipe(gulp.dest('./example/js/dist'));
-		console.log("Build complete.");
-	});
-
-	webpack(webpackExampleAltConfig, function(err, stats) {
-		if (err) throw new gutil.PluginError("webpack", err);
-		gutil.log("[webpack]", stats.toString({
-			// output options
-		}));
 		gulp.src('./dist/example-alt.js')
 			.pipe(gulp.dest('./example-alt/js/dist'));
-		console.log("Build 2 complete.");
+		console.log("Build complete.");
 	});
 
 });
