@@ -168,6 +168,13 @@ return /******/ (function(modules) { // webpackBootstrap
 				if (nextProps.hasOwnProperty('data')) {
 					this.setData(nextProps.data);
 				}
+
+				if (nextProps.hasOwnProperty('initialSort')) {
+					this.setState({ sort: nextProps.initialSort });
+				}
+				if (nextProps.hasOwnProperty('initialSortDir')) {
+					this.setState({ sortDir: nextProps.initialSortDir });
+				}
 			}
 		}, {
 			key: 'loadData',
@@ -373,19 +380,20 @@ return /******/ (function(modules) { // webpackBootstrap
 					page: this.state.page,
 					pageSize: this.state.pageSize,
 					noFilteredRecordsMessage: this.props.noFilteredRecordsMessage,
-					className: this.props.tableClassName
+					className: this.props.tableClassName,
+					style: this.props.style
 				});
 
 				var totalPages = filteredEntries && filteredEntries.length > 0 ? Math.ceil(filteredEntries.length / this.state.pageSize) : 0;
 
-				var topPager = this.state.loading || this.state.entries.length === 0 || this.props.pagersVisible === false ? '' : _react2.default.createElement(_reactPager2.default, { total: totalPages,
+				var topPager = this.state.loading || this.state.entries.length === 0 || this.props.pagersVisible === false || this.props.topPagerVisible === false ? '' : _react2.default.createElement(_reactPager2.default, { total: totalPages,
 					current: this.state.page,
 					visiblePages: this.state.visiblePages,
 					onPageChanged: this.updatePage,
 					className: 'pagination-sm pull-right'
 				});
 
-				var bottomPager = this.state.loading || this.state.entries.length === 0 || this.props.pagersVisible === false ? '' : _react2.default.createElement(_reactPager2.default, { total: totalPages,
+				var bottomPager = this.state.loading || this.state.entries.length === 0 || this.props.pagersVisible === false || this.props.bottomPagerVisible === false ? '' : _react2.default.createElement(_reactPager2.default, { total: totalPages,
 					current: this.state.page,
 					visiblePages: this.state.visiblePages,
 					onPageChanged: this.updatePage
@@ -613,7 +621,7 @@ return /******/ (function(modules) { // webpackBootstrap
 					null,
 					_react2.default.createElement(
 						"table",
-						{ className: tableClassName },
+						{ className: tableClassName, style: this.props.style },
 						_react2.default.createElement(
 							"thead",
 							null,

@@ -119,7 +119,7 @@ class Table extends React.Component {
 				(<div>{this.props.noFilteredRecordsMessage || 'There are no records to display.'}</div>)
 			:
 			<div>
-				<table className={tableClassName}>
+				<table className={tableClassName} style={this.props.style}>
 					<thead>
 						<tr>
 							{headerCells}

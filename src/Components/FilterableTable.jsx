@@ -48,7 +48,6 @@ class FilterableTable extends React.Component {
 		}
 	}
 
-
 	componentDidMount() {
 		this.loadData();
 		// focus the search input when '/' is pressed
@@ -68,6 +67,13 @@ class FilterableTable extends React.Component {
 		// and set our states
 		if (nextProps.hasOwnProperty('data')) {
 			this.setData(nextProps.data);
+		}
+
+		if (nextProps.hasOwnProperty('initialSort')) {
+			this.setState({ sort: nextProps.initialSort });
+		}
+		if (nextProps.hasOwnProperty('initialSortDir')) {
+			this.setState({ sortDir: nextProps.initialSortDir });
 		}
 	}
 
@@ -259,6 +265,7 @@ class FilterableTable extends React.Component {
 				pageSize={this.state.pageSize}
 				noFilteredRecordsMessage={this.props.noFilteredRecordsMessage}
 				className={this.props.tableClassName}
+				style={this.props.style}
 			/>;
 
 
@@ -266,7 +273,7 @@ class FilterableTable extends React.Component {
 			Math.ceil(filteredEntries.length / this.state.pageSize)
 			: 0;
 
-		let topPager = this.state.loading || this.state.entries.length === 0 || this.props.pagersVisible === false ? '' :
+		let topPager = this.state.loading || this.state.entries.length === 0 || this.props.pagersVisible === false || this.props.topPagerVisible === false ? '' :
 			<Pager total={totalPages}
 				current={this.state.page}
 				visiblePages={this.state.visiblePages}
@@ -274,7 +281,7 @@ class FilterableTable extends React.Component {
 				className="pagination-sm pull-right"
 			/>;
 
-		let bottomPager = this.state.loading || this.state.entries.length === 0 || this.props.pagersVisible === false ? '' :
+		let bottomPager = this.state.loading || this.state.entries.length === 0 || this.props.pagersVisible === false || this.props.bottomPagerVisible === false ? '' :
 			<Pager total={totalPages}
 				current={this.state.page}
 				visiblePages={this.state.visiblePages}
