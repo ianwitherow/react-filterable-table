@@ -59,7 +59,6 @@ ReactDOM.render(
 			fields={fields}
 			noRecordsMessage="There are no people to display"
 			noFilteredRecordsMessage="No people match your filters!"
-			fields={fields}
 		/>
 	</div>, document.getElementById('root')
 );

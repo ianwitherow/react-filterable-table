@@ -38,7 +38,6 @@ let fields = [
 	fields={fields}
 	noRecordsMessage="There are no people to display"
 	noFilteredRecordsMessage="No people match your filters!"
-	fields={this.fields}
 />
 
 ```
