@@ -39,6 +39,15 @@ class Header extends React.Component {
 			</span>
 		);
 
+		let perPageSelect = this.props.pagersVisible !== false
+			?  <select className="form-control pull-sm-right pull-md-right pull-lg-right" onChange={updatePageSize} value={this.props.pageSize}>
+					<option value="10">10 per page</option>
+					<option value="20">20 per page</option>
+					<option value="30">30 per page</option>
+					<option value="50">50 per page</option>
+				</select>
+			: null;
+
 		return (
 			<div>
 				{this.props.children}
@@ -53,12 +62,7 @@ class Header extends React.Component {
 						</span>
 					</div>
 					<div className="col-sm-5 col-sm-push-4">
-						<select className="form-control pull-sm-right pull-md-right pull-lg-right" onChange={updatePageSize} value={this.props.pageSize}>
-							<option value="10">10 per page</option>
-							<option value="20">20 per page</option>
-							<option value="30">30 per page</option>
-							<option value="50">50 per page</option>
-						</select>
+						{perPageSelect}
 					</div>
 					<div className="col-sm-4 col-sm-pull-4 text-center text-muted record-count">
 						{loading || recordCountMessage}

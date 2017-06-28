@@ -9,7 +9,7 @@ class Table extends React.Component {
 	headerSortClassName(field) {
 		// Return the class name for the sort icon
 		if (field.sortable) {
-			if (this.props.sort === field.name || this.props.sort === field.sortFieldName) {
+			if (this.props.sort && (this.props.sort === field.name || this.props.sort === field.sortFieldName)) {
 				if (this.props.sortDir) {
 					return "fa fa-sort-asc";
 				} else {
@@ -35,7 +35,11 @@ class Table extends React.Component {
 		const endIndex = startIndex + pageSize;
 
 		// Slice array based on what should be shown on the current page
-		const records = this.props.records.slice(startIndex, endIndex);
+		// if pagersVisible is false, don't slice it - all records should be shown
+		let records = this.props.records;
+		if (this.props.pagersVisible !== false) {
+			records = records.slice(startIndex, endIndex);
+		}
 
 		// If the field has the visible property set to false, ignore it
 		const fields = this.props.fields.filter(field => {
@@ -119,7 +123,7 @@ class Table extends React.Component {
 				(<div>{this.props.noFilteredRecordsMessage || 'There are no records to display.'}</div>)
 			:
 			<div>
-				<table className={tableClassName} style={this.props.style}>
+				<table className={tableClassName} style={this.props.style} ref="table">
 					<thead>
 						<tr>
 							{headerCells}

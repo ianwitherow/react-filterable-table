@@ -32,6 +32,7 @@ class FilterableTable extends React.Component {
 		this.updatePage = this.updatePage.bind(this);
 		this.filterInputChanged = this.filterInputChanged.bind(this);
 		this.updateSort = this.updateSort.bind(this);
+		this.scrollIntoView = this.scrollIntoView.bind(this);
 		this.removeExactFilter = this.removeExactFilter.bind(this);
 
 		axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
@@ -216,7 +217,7 @@ class FilterableTable extends React.Component {
 
 	scrollIntoView() {
 		// Make sure things are in view
-		let table = document.querySelector('table.filterable-table thead');
+		let table = this.refs.Table.refs.table;
 		if (table && !isElementInViewport(table)) {
 			table.scrollIntoView();
 		}
@@ -263,9 +264,11 @@ class FilterableTable extends React.Component {
 				sortDir={this.state.sortDir}
 				page={this.state.page}
 				pageSize={this.state.pageSize}
+				pagersVisible={this.props.pagersVisible}
 				noFilteredRecordsMessage={this.props.noFilteredRecordsMessage}
 				className={this.props.tableClassName}
 				style={this.props.style}
+				ref="Table"
 			/>;
 
 
@@ -312,7 +315,7 @@ class FilterableTable extends React.Component {
 				</Header>
 				
 
-				<div className="report-table-container">
+				<div className="table-container">
 					{loading}
 					{serverErrorMessage}
 					{noRecordsMessage}
