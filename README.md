@@ -60,6 +60,8 @@ let fields = [
 * `recordCountNamePlural` - `string` - Verbage to use when there are more than 1 results (or 0). For example, "3 giraffes".
 * `headerVisible` - `bool` - Whether or not to show the header.
 * `pagersVisible` - `bool` - Whether or not to show the pagers.
+* `topPagerVisible` - `bool` - Whether or not to show the top pager.
+* `bottomPagerVisible` - `bool` - Whether or not to show the bottom pager.
 
 
 ## `field` Props
