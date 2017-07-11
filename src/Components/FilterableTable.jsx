@@ -267,6 +267,7 @@ class FilterableTable extends React.Component {
 				pagersVisible={this.props.pagersVisible}
 				noFilteredRecordsMessage={this.props.noFilteredRecordsMessage}
 				className={this.props.tableClassName}
+				trClassName={this.props.trClassName}
 				style={this.props.style}
 				ref="Table"
 			/>;

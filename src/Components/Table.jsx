@@ -58,20 +58,31 @@ class Table extends React.Component {
 		});
 
 		const rows = records.map((record, i) => {
+			let trClassName = this.props.trClassName || null;
+			if (typeof(this.props.trClassName) === "function") {
+				trClassName = this.props.trClassName(record, i);
+			}
 
 			const tableTds = fields.map((field, q) => {
 				// Use the displayName property if supplied, otherwise use name
 				let fieldDisplayName = field.displayName !== undefined ? field.displayName : field.name;
 				let spanClassName = field.exactFilterable && record[field.name] ? "filterable " : "";
-				// Give the field's render function (if supplied) access to ALL the things!
+				let tdClassName = field.tdClassName || null;
 
 				// Build out the body of the <td>
 				let recordBody = record[field.name];
 
 				// If this field has a render function, call it with some props
+				const renderProps = { value: record[field.name], record, field, ...this.props };
 				if (field.render && typeof field.render === "function") {
-					const renderProps = { value: record[field.name], record, field, ...this.props };
 					recordBody = field.render(renderProps);
+				}
+
+				// If tdClassName is a function, call it with our renderProps
+				if (typeof(field.tdClassName) === "function") {
+					console.log('moo');
+					 tdClassName = field.tdClassName(renderProps);
+					 console.log(tdClassName);
 				}
 
 				// Determine if the body is empty
@@ -89,7 +100,7 @@ class Table extends React.Component {
 
 
 				return (
-					<td className={field.tdClassName ? field.tdClassName : null} key={q}>
+					<td className={tdClassName} key={q}>
 						<span className={spanClassName} onClick={field.exactFilterable ? () => addExactFilter(record[field.name], field.name, (fieldDisplayName)) : null}>
 							{recordBody}
 						</span>
@@ -98,7 +109,7 @@ class Table extends React.Component {
 			});
 
 			return (
-				<tr key={i}>
+				<tr key={i} className={trClassName}>
 					{tableTds}
 				</tr>
 			);
@@ -106,7 +117,7 @@ class Table extends React.Component {
 
 		const tfootCells = fields.map((field, i) => {
 			return (
-				<td key={i} className={field.tdClassName ? field.tdClassName : null}>
+				<td key={i}>
 					{field.footerValue || '' }
 				</td>
 			);

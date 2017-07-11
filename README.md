@@ -47,6 +47,7 @@ let fields = [
 * `namespace` - `string` - The app saves settings (currently only page size) to localStorage. Namespace prevents overriding settings from other pages/apps where this is used. Use the same namespace across implementations that should share the settings. Default: 'react-filterable-table'
 * `className` - `string` - Class name to apply to the component's root &lt;div&gt; element.
 * `tableClassName` - `string` - Class name to apply to the component's &lt;table&gt; element.
+* `trClassName` - `string` or `function` - Class name to apply to the &lt;tr&gt; elements. If a function is passed, it's called with the `record` and `index` as parameters: `function (record, index)`
 * `initialSort` - `string` - The field name on which to sort on initially.
 * `initialSortDir` - `bool` - The sort direction to use initially - true is ascending, false is descending. Default: `true`
 * `stickySorting` - `bool` - If true, empty values will always sort to the bottom. Default: `false`
@@ -74,7 +75,7 @@ let fields = [
 * `sortable` - `bool` - Whether or not the user can sort on this field.
 * `visible` - `bool` - Whether or not the field is visible.
 * `thClassName` - `string` - Class name of the &lt;th&gt; element.
-* `tdClassName` - `string` - Class name of the &lt;td&gt; element.
+* `tdClassName` - `string` or `function` - Class name of the &lt;td&gt; element. If a function is passed, it's called with the same parameters as `render` (see below)
 * `emptyDisplay` - `string` - Text to show when the field is empty, for example "---" or "Not Set".
 * `render` - `fn` - Function called to render the field. Function is passed a `props` object which contains: `props.value` - the value of the field from the `data` object, and `props.field` - this field object ([Demo using field render functions](https://ianwitherow.github.io/react-filterable-table/example-alt/index.html)).
 

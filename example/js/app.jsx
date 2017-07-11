@@ -56,7 +56,7 @@ ReactDOM.render(
 			initialSort="name"
 			data={data}
 			fields={fields}
-			noRecordsMessage="There are no people to display"
+			roRecordsMessage="There are no people to display"
 			noFilteredRecordsMessage="No people match your filters!"
 		/>
 	</div>, document.getElementById('root')
