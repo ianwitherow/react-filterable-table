@@ -57,8 +57,8 @@ let fields = [
 * `fields` - `array` - Array of `field`s used for building the table. These fields have their own list of props detailed below.
 * `noRecordsMessage` - `string` - Message to show when there are no records.
 * `noFilteredRecordsMessage` - `string` - Message to show when the user has applied filters which result in no records to show.
-* `recordCountName` - `string` - Verbage to use at the top where it says "X results". For example, "1 giraffe".
-* `recordCountNamePlural` - `string` - Verbage to use when there are more than 1 results (or 0). For example, "3 giraffes".
+* `recordCountName` - `string` - Verbiage to use at the top where it says "X results". For example, "1 giraffe".
+* `recordCountNamePlural` - `string` - Verbiage to use when there are more than 1 results (or 0). For example, "3 giraffes".
 * `headerVisible` - `bool` - Whether or not to show the header.
 * `pagersVisible` - `bool` - Whether or not to show the pagers.
 * `topPagerVisible` - `bool` - Whether or not to show the top pager.
