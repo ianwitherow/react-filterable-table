@@ -120,6 +120,14 @@ let fields = [
 ]
 ```
 
+The render function gets a few other props as well which may be useful. For example:
+* `records` - The current array of records that the table is showing (if filtered, this will be the filtered items)
+* `allRecords` - Same as above, but has all records (not filtered)
+* `addExactFilter` - function to add an exact filter on something. Use it in an onClick to filter on whatever you want.
+	* Usage: `addExactFilter(value, fieldname, name = fieldname)`
+* Various other internal props which may or may not be useful. Check them out using `console.log(props)` in a render function to see what else is available. These internal props could potentially change with updates, so use at your own risk.
+
+
 ## Building
 To build the main library: `gulp build`
 
