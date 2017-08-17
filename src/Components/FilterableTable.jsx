@@ -21,7 +21,7 @@ class FilterableTable extends React.Component {
 			totalPages: 1,
 			visiblePages: 5,
 			page: 0,
-			pageSize: +localStorage.getItem(this.props.namespace + '.PageSize') || 10
+			pageSize: +localStorage.getItem(this.props.namespace + '.PageSize') || this.props.pageSize || 10
 		}
 
 		this.loadData = this.loadData.bind(this);
