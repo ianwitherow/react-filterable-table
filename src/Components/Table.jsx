@@ -107,15 +107,22 @@ class Table extends React.Component {
 
 				// add the "empty" classname if record is empty
 				if (bodyIsEmpty) {
-					spanClassName += "empty"
+					spanClassName = "empty"
 				}
 
+				if (!bodyIsEmpty && field.exactFilterable) {
+					spanClassName = "filterable";
+				}
+
+				let tdContent = hasValue(recordBody)
+					?  <span className={spanClassName} onClick={field.exactFilterable ? () => addExactFilter(record[field.name], field.name, (fieldDisplayName)) : null}>
+							{recordBody}
+						</span>
+					: null;
 
 				return (
 					<td className={tdClassName} key={q}>
-						<span className={spanClassName} onClick={field.exactFilterable ? () => addExactFilter(record[field.name], field.name, (fieldDisplayName)) : null}>
-							{recordBody}
-						</span>
+						{tdContent}
 					</td>
 				);
 			});
