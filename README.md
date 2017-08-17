@@ -47,7 +47,8 @@ let fields = [
 * `namespace` - `string` - The app saves settings (currently only page size) to localStorage. Namespace prevents overriding settings from other pages/apps where this is used. Use the same namespace across implementations that should share the settings. Default: 'react-filterable-table'
 * `className` - `string` - Class name to apply to the component's root &lt;div&gt; element.
 * `tableClassName` - `string` - Class name to apply to the component's &lt;table&gt; element.
-* `trClassName` - `string` or `function` - Class name to apply to the &lt;tr&gt; elements. If a function is passed, it's called with the `record` and `index` as parameters: `function (record, index)`
+* `trClassName` - `string` or `fn` - Class name to apply to the &lt;tr&gt; elements. If a function is passed, it's called with the `record` and `index` as parameters: `function (record, index)`
+* `footerTrClassName` - `string` - Class name of the footer's &lt;tr&gt; element.
 * `initialSort` - `string` - The field name on which to sort on initially.
 * `initialSortDir` - `bool` - The sort direction to use initially - true is ascending, false is descending. Default: `true`
 * `stickySorting` - `bool` - If true, empty values will always sort to the bottom. Default: `false`
@@ -77,9 +78,11 @@ let fields = [
 * `sortable` - `bool` - Whether or not the user can sort on this field.
 * `visible` - `bool` - Whether or not the field is visible.
 * `thClassName` - `string` - Class name of the &lt;th&gt; element.
-* `tdClassName` - `string` or `function` - Class name of the &lt;td&gt; element. If a function is passed, it's called with the same parameters as `render` (see below)
+* `tdClassName` - `string` or `fn` - Class name of the &lt;td&gt; element. If a function is passed, it's called with the same parameters as `render` (see below)
+* `footerTdClassName` - `string` - Class name of the footer's &lt;td&gt; element.
 * `emptyDisplay` - `string` - Text to show when the field is empty, for example "---" or "Not Set".
 * `render` - `fn` - Function called to render the field. Function is passed a `props` object which contains: `props.value` - the value of the field from the `data` object, and `props.field` - this field object ([Demo using field render functions](https://ianwitherow.github.io/react-filterable-table/example-alt/index.html)).
+* `footerValue` - `fn` or `string` - Value for the footer cell. Can be a render function (for totaling, etc) or a static value. Tip: render functions receive both `filteredRecords` (your data, filtered if any filters are applied) and `records` (non-filtered data) objects in the props parameter. You can use these to show totals for filtered or unfiltered data.
 
 
 ## Example using a `render` function
@@ -121,8 +124,8 @@ let fields = [
 ```
 
 The render function gets a few other props as well which may be useful. For example:
-* `records` - The current array of records that the table is showing (if filtered, this will be the filtered items)
-* `allRecords` - Same as above, but has all records (not filtered)
+* `records` - Your data array
+* `filteredRecords` - The current array of records that the table is showing (if there are any filters applied, this will be the filtered items)
 * `addExactFilter` - function to add an exact filter on something. Use it in an onClick to filter on whatever you want.
 	* Usage: `addExactFilter(value, fieldname, name = fieldname)`
 * Various other internal props which may or may not be useful. Check them out using `console.log(props)` in a render function to see what else is available. These internal props could potentially change with updates, so use at your own risk.
