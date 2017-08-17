@@ -50,8 +50,13 @@ class Table extends React.Component {
 		const headerCells = fields.map((field, i) => {
 			// Use the displayName property if supplied, otherwise use name
 			let fieldDisplayName = field.displayName !== undefined ? field.displayName : field.name;
+			const renderProps = { field, ...this.props };
+			if (typeof(field.thRender) === "function") {
+				fieldDisplayName = field.thRender(renderProps);
+			}
+
 			return (
-				<th onClick={field.sortable ? () => updateSort(field.sortFieldName || field.name) : null} className={field.thClassName ? field.thClassName : null} key={i}>
+				<th onClick={field.sortable ? () => updateSort(field.sortFieldName || field.name) : null} className={field.thClassName ? field.thClassName : null} key={i} title={field.title || null}>
 					<span className={field.sortable ? "sortable" : null}>{fieldDisplayName}</span>
 					<span className={this.headerSortClassName(field)}></span>
 				</th>
@@ -77,7 +82,7 @@ class Table extends React.Component {
 				const renderProps = {
 					value: record[field.name],
 					record,
-					records,
+					records: this.props.allRecords,
 					filteredRecords: records,
 					field,
 					...this.props
@@ -122,13 +127,30 @@ class Table extends React.Component {
 			);
 		});
 
-		const tfootCells = fields.map((field, i) => {
-			return (
-				<td key={i}>
-					{field.footerValue || '' }
-				</td>
-			);
-		});
+		const tfoot = fields.some(f => f.footerValue)
+			? (
+				<tfoot>
+					<tr className={this.props.footerTrClassName}>
+						{
+							fields.map((field, i) => {
+								const renderProps = {
+									records: this.props.allRecords,
+									filteredRecords: this.props.records,
+									field,
+									...this.props
+								};
+
+								return (
+									<td key={i} className={field.footerTdClassName}>
+										{(typeof field.footerValue === "function" ? field.footerValue(renderProps) : field.footerValue) || '' }
+									</td>
+								)
+							})
+						}
+					</tr>
+				</tfoot>
+			)
+			: null;
 
 		let tableClassName = this.props.className;
 		if (tableClassName.indexOf('filterable-table') === -1) {
@@ -150,11 +172,7 @@ class Table extends React.Component {
 					<tbody>
 						{rows}
 					</tbody>
-					<tfoot>
-						<tr>
-							{tfootCells}
-						</tr>
-					</tfoot>
+					{tfoot}
 				</table>
 			</div>
 		);
