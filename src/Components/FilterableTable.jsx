@@ -141,7 +141,7 @@ class FilterableTable extends React.Component {
 	addExactFilter(value, fieldname, name = fieldname) {
 		// Exact filters are an array; grab the existing ones and push this one on it.
 		// Don't add it if value is null/undefined
-		if (!value) { return; }
+		if (value === undefined || value === null || value.toString().length === 0) { return; }
 
 		let { exactFilters } = this.state;
 

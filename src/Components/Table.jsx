@@ -1,4 +1,5 @@
 import React from 'react';
+const hasValue = require('../Helpers/hasValue');
 
 class Table extends React.Component {
 	constructor(props) {
