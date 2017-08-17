@@ -259,8 +259,8 @@ class FilterableTable extends React.Component {
 		let table = this.state.loading || this.state.entries.length === 0 ? '' :
 			<Table
 				records={filteredEntries}
+				allRecords={this.state.entries}
 				fields={this.props.fields}
-				filter={this.state.filter}
 				filterExact={this.state.filterExact}
 				addExactFilter={this.addExactFilter}
 				updateSort={this.updateSort}

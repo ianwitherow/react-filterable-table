@@ -67,23 +67,29 @@ class Table extends React.Component {
 			const tableTds = fields.map((field, q) => {
 				// Use the displayName property if supplied, otherwise use name
 				let fieldDisplayName = field.displayName !== undefined ? field.displayName : field.name;
-				let spanClassName = field.exactFilterable && record[field.name] ? "filterable " : "";
+				let spanClassName = "";
 				let tdClassName = field.tdClassName || null;
 
 				// Build out the body of the <td>
 				let recordBody = record[field.name];
 
 				// If this field has a render function, call it with some props
-				const renderProps = { value: record[field.name], record, field, ...this.props };
+				const renderProps = {
+					value: record[field.name],
+					record,
+					records,
+					filteredRecords: records,
+					field,
+					...this.props
+				};
+
 				if (field.render && typeof field.render === "function") {
 					recordBody = field.render(renderProps);
 				}
 
 				// If tdClassName is a function, call it with our renderProps
 				if (typeof(field.tdClassName) === "function") {
-					console.log('moo');
 					 tdClassName = field.tdClassName(renderProps);
-					 console.log(tdClassName);
 				}
 
 				// Determine if the body is empty
