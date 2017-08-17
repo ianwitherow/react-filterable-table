@@ -44,8 +44,8 @@ class FilterableTable extends React.Component {
 			noRecordsMessage: "There are no records to display",
 			noFilteredRecordsMessage: "There are no records to display",
 			stickySorting: false,
-			namespace: "react-filterable-table",
-			tableClassName: "table table-condensed table-hover filterable-table"
+			tableClassName: "table table-condensed table-hover filterable-table",
+			pageSizes: [10, 20, 30, 50]
 		}
 	}
 
@@ -312,6 +312,7 @@ class FilterableTable extends React.Component {
 					lowerHeaderChildren={this.props.lowerHeaderChildren}
 					visible={this.props.headerVisible}
 					pagersVisible={this.props.pagersVisible}
+					pageSizes={this.props.pageSizes}
 				>
 				</Header>
 				

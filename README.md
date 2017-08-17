@@ -63,6 +63,8 @@ let fields = [
 * `pagersVisible` - `bool` - Whether or not to show the pagers.
 * `topPagerVisible` - `bool` - Whether or not to show the top pager.
 * `bottomPagerVisible` - `bool` - Whether or not to show the bottom pager.
+* `pageSize` - `int` - Page size (default: 10)
+* `pageSizes` - `Array` - Array of numbers to use for the page size dropdown. Default is `[10, 20, 30, 50]`. Set to `null` to hide the page size dropdown.
 
 
 ## `field` Props

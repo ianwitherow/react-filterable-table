@@ -29,7 +29,7 @@ class Header extends React.Component {
 		if (this.props.visible === false) {
 			return <div></div>;
 		}
-		const { loading, recordCount, filter, updateFilter, updatePageSize } = this.props;
+		const { loading, recordCount, filter, updateFilter, updatePageSize, pageSizes } = this.props;
 
 		// Record count message -- the text at the top that says something like "4 records"
 		// text can be overridden using the recordCountName and recordCountNamePlural props.
@@ -39,12 +39,11 @@ class Header extends React.Component {
 			</span>
 		);
 
-		let perPageSelect = this.props.pagersVisible !== false
+		let perPageSelect = this.props.pagersVisible !== false && this.props.pageSizes && this.props.pageSizes.length > 0
 			?  <select className="form-control pull-sm-right pull-md-right pull-lg-right" onChange={updatePageSize} value={this.props.pageSize}>
-					<option value="10">10 per page</option>
-					<option value="20">20 per page</option>
-					<option value="30">30 per page</option>
-					<option value="50">50 per page</option>
+					{this.props.pageSizes.map((p, i) =>
+						<option value={p} key={i}>{p} per page</option>
+					)}
 				</select>
 			: null;
 
