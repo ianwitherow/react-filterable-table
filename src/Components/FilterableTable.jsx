@@ -191,7 +191,9 @@ class FilterableTable extends React.Component {
 	updatePageSize(event) {
 		let pageSize = +event.target.value;
 		this.setState({ page: 0, pageSize });
-		localStorage.setItem(this.props.namespace + '.PageSize', pageSize);
+		if (this.props.namespace) {
+			localStorage.setItem(this.props.namespace + '.PageSize', pageSize);
+		}
 	}
 
 	filterInputChanged(event) {
