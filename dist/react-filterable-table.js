@@ -1066,7 +1066,7 @@ return /******/ (function(modules) { // webpackBootstrap
 						// For strings, set both to lowercase for comparison
 						recordA = hasValue(a[sort]) ? a[sort].toLowerCase() : emptySortCompare;
 						recordB = hasValue(b[sort]) ? b[sort].toLowerCase() : emptySortCompare;
-					} else if (typeof a[sort].getMonth === "function" || typeof b[sort].getMonth === "function") {
+					} else if (hasValue(a[sort]) && typeof a[sort].getMonth === "function" || hasValue(b[sort]) && typeof b[sort].getMonth === "function") {
 						// For dates, we'll need different "emptySortCompare" values
 						// If desc, set to some really early date, like 1/1/1000.
 						// If asc, set to some really late date, like 1/1/2999.
