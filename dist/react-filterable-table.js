@@ -427,7 +427,8 @@ return /******/ (function(modules) { // webpackBootstrap
 						lowerHeaderChildren: this.props.lowerHeaderChildren,
 						visible: this.props.headerVisible,
 						pagersVisible: this.props.pagersVisible,
-						pageSizes: this.props.pageSizes
+						pageSizes: this.props.pageSizes,
+						autofocusFilter: this.props.autofocusFilter
 					}),
 					_react2.default.createElement(
 						'div',
@@ -816,7 +817,7 @@ return /******/ (function(modules) { // webpackBootstrap
 							_react2.default.createElement(
 								'span',
 								{ className: 'filter-container' },
-								_react2.default.createElement('input', { type: 'text', className: 'form-control filter-input', value: filter, onChange: this.filterChanged, ref: 'filter', placeholder: 'Filter' }),
+								_react2.default.createElement('input', { type: 'text', className: 'form-control filter-input', value: filter, onChange: this.filterChanged, ref: 'filter', placeholder: 'Filter', autoFocus: this.props.autofocusFilter }),
 								_react2.default.createElement(
 									'span',
 									{ className: 'close clear-filter', onClick: function onClick() {

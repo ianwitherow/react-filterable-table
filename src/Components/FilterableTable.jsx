@@ -317,6 +317,7 @@ class FilterableTable extends React.Component {
 					visible={this.props.headerVisible}
 					pagersVisible={this.props.pagersVisible}
 					pageSizes={this.props.pageSizes}
+					autofocusFilter={this.props.autofocusFilter}
 				>
 				</Header>
 				

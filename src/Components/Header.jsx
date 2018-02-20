@@ -54,7 +54,7 @@ class Header extends React.Component {
 				<div className="row header-row">
 					<div className="col-sm-3 filter-container">
 						<span className="filter-container">
-							<input type="text" className="form-control filter-input" value={filter} onChange={this.filterChanged} ref="filter" placeholder="Filter" />
+							<input type="text" className="form-control filter-input" value={filter} onChange={this.filterChanged} ref="filter" placeholder="Filter" autoFocus={this.props.autofocusFilter} />
 							<span className="close clear-filter" onClick={() => this.filterChanged('')}>
 								&times;
 							</span>
