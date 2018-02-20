@@ -286,7 +286,8 @@ class FilterableTable extends React.Component {
 				current={this.state.page}
 				visiblePages={this.state.visiblePages}
 				onPageChanged={this.updatePage}
-				className="pagination-sm pull-right"
+				className={this.props.pagerTopClassName || "pagination-sm pull-right"}
+				titles={this.props.pagerTitles}
 			/>;
 
 		let bottomPager = this.state.loading || this.state.entries.length === 0 || this.props.pagersVisible === false || this.props.bottomPagerVisible === false ? '' :
@@ -294,6 +295,8 @@ class FilterableTable extends React.Component {
 				current={this.state.page}
 				visiblePages={this.state.visiblePages}
 				onPageChanged={this.updatePage}
+				className={this.props.pagerBottomClassName}
+				titles={this.props.pagerTitles}
 			/>;
 
 

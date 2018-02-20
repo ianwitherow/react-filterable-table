@@ -398,13 +398,16 @@ return /******/ (function(modules) { // webpackBootstrap
 					current: this.state.page,
 					visiblePages: this.state.visiblePages,
 					onPageChanged: this.updatePage,
-					className: 'pagination-sm pull-right'
+					className: this.props.pagerTopClassName || "pagination-sm pull-right",
+					titles: this.props.pagerTitles
 				});
 
 				var bottomPager = this.state.loading || this.state.entries.length === 0 || this.props.pagersVisible === false || this.props.bottomPagerVisible === false ? '' : _react2.default.createElement(_reactPager2.default, { total: totalPages,
 					current: this.state.page,
 					visiblePages: this.state.visiblePages,
-					onPageChanged: this.updatePage
+					onPageChanged: this.updatePage,
+					className: this.props.pagerBottomClassName,
+					titles: this.props.pagerTitles
 				});
 
 				return _react2.default.createElement(
