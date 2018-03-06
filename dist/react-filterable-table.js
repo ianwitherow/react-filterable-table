@@ -355,7 +355,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				var serverErrorMessage = !this.state.serverError ? '' : _react2.default.createElement(
 					'div',
 					{ className: 'alert alert-danger text-center' },
-					'Something went wrong! Check console for error message(s).'
+					this.props.serverErrorMessage || 'Something went wrong! Check console for error message(s).'
 				);
 
 				var noRecordsMessage = !this.state.serverError && !this.state.loading && this.state.entries.length === 0 ? _react2.default.createElement(

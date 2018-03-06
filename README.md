@@ -44,20 +44,20 @@ let fields = [
 
 ## Props
 
-* `namespace` - `string` - The app saves settings (currently only page size) to localStorage. Namespace prevents overriding settings from other pages/apps where this is used. Use the same namespace across implementations that should share the settings. Default: 'react-filterable-table'
 * `className` - `string` - Class name to apply to the component's root &lt;div&gt; element.
+* `data` - `array` - Static data to bind to.
+* `dataEndpoint` - `string` - If not using a static dataset, this can be used to fetch data with AJAX.
+* `onDataReceived` - `fn` - This is called (passing the array of data) before the data is rendered. Any necessary data transformations (date parsing, etc) can be done here.
+* `fields` - `array` - Array of `field`s used for building the table. These fields have their own list of props detailed below.
 * `tableClassName` - `string` - Class name to apply to the component's &lt;table&gt; element.
 * `trClassName` - `string` or `fn` - Class name to apply to the &lt;tr&gt; elements. If a function is passed, it's called with the `record` and `index` as parameters: `function (record, index)`
 * `footerTrClassName` - `string` - Class name of the footer's &lt;tr&gt; element.
 * `initialSort` - `string` - The field name on which to sort on initially.
 * `initialSortDir` - `bool` - The sort direction to use initially - true is ascending, false is descending. Default: `true`
 * `stickySorting` - `bool` - If true, empty values will always sort to the bottom. Default: `false`
-* `data` - `array` - Static data to bind to.
-* `dataEndpoint` - `string` - If not using a static dataset, this can be used to fetch data with AJAX.
-* `onDataReceived` - `fn` - This is called (passing the array of data) before the data is rendered. Any necessary data transformations (date parsing, etc) can be done here.
-* `fields` - `array` - Array of `field`s used for building the table. These fields have their own list of props detailed below.
 * `noRecordsMessage` - `string` - Message to show when there are no records.
 * `noFilteredRecordsMessage` - `string` - Message to show when the user has applied filters which result in no records to show.
+* `serverErrorMessage` - `string` - Message to show when an error is encountered from the `dataEndpoint` (if used).
 * `recordCountName` - `string` - Verbiage to use at the top where it says "X results". For example, "1 giraffe".
 * `recordCountNamePlural` - `string` - Verbiage to use when there are more than 1 results (or 0). For example, "3 giraffes".
 * `headerVisible` - `bool` - Whether or not to show the header.
@@ -70,6 +70,7 @@ let fields = [
 * `pagerTitles` - `object` - Specify the titles for the pager buttons. E.g., `pagerTitles={{ first: '<|', last: '>|' }}`
 * `pagerTopClassName` - `string` - Specify the className for the top pager
 * `pagerBottomClassName` - `string` - Specify the className for the bottom pager
+* `namespace` - `string` - The app saves settings (currently only page size) to localStorage. Namespace prevents overriding settings from other pages/apps where this is used. Use the same namespace across implementations that should share the settings. Default: 'react-filterable-table'
 
 
 ## `field` Props

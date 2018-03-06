@@ -236,7 +236,7 @@ class FilterableTable extends React.Component {
 
 		let serverErrorMessage = !this.state.serverError ? '' :
 			<div className="alert alert-danger text-center">
-				Something went wrong! Check console for error message(s).
+				{this.props.serverErrorMessage || 'Something went wrong! Check console for error message(s).'}
 			</div>;
 
 		let noRecordsMessage = (!this.state.serverError && !this.state.loading && this.state.entries.length === 0)
