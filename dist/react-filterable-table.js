@@ -352,17 +352,17 @@ return /******/ (function(modules) { // webpackBootstrap
 					'Loading...'
 				);
 
-				var serverErrorMessage = !this.state.serverError ? '' : _react2.default.createElement(
+				var serverErrorMessage = this.state.serverError && (this.props.serverErrorMessage || _react2.default.createElement(
 					'div',
 					{ className: 'alert alert-danger text-center' },
-					this.props.serverErrorMessage || 'Something went wrong! Check console for error message(s).'
-				);
+					'Something went wrong! Check console for error message(s).'
+				));
 
-				var noRecordsMessage = !this.state.serverError && !this.state.loading && this.state.entries.length === 0 ? _react2.default.createElement(
+				var noRecordsMessage = !this.state.serverError && !this.state.loading && this.state.entries.length === 0 && _react2.default.createElement(
 					'div',
 					null,
 					this.props.noRecordsMessage
-				) : '';
+				);
 
 				var filteredEntries = (0, _FilterAndSort2.default)(this.state.entries, {
 					filter: this.state.filter,
@@ -373,7 +373,7 @@ return /******/ (function(modules) { // webpackBootstrap
 					fields: this.props.fields
 				});
 
-				var table = this.state.loading || this.state.entries.length === 0 ? '' : _react2.default.createElement(_Table2.default, {
+				var table = !this.state.loading && this.state.entries.length > 0 && _react2.default.createElement(_Table2.default, {
 					records: filteredEntries,
 					allRecords: this.state.entries,
 					fields: this.props.fields,

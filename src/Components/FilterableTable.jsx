@@ -234,16 +234,18 @@ class FilterableTable extends React.Component {
 				Loading...
 			</div>;
 
-		let serverErrorMessage = !this.state.serverError ? '' :
-			<div className="alert alert-danger text-center">
-				{this.props.serverErrorMessage || 'Something went wrong! Check console for error message(s).'}
-			</div>;
+		let serverErrorMessage = this.state.serverError &&
+			(
+				this.props.serverErrorMessage ||
+				<div className="alert alert-danger text-center">
+					Something went wrong! Check console for error message(s).
+				</div>
+			)
 
-		let noRecordsMessage = (!this.state.serverError && !this.state.loading && this.state.entries.length === 0)
-		?  <div>
+		let noRecordsMessage = (!this.state.serverError && !this.state.loading && this.state.entries.length === 0) &&
+		  	<div>
 				{this.props.noRecordsMessage}
 			</div>
-		: '';
 
 
 		let filteredEntries = FilterAndSort(this.state.entries, {
@@ -256,7 +258,7 @@ class FilterableTable extends React.Component {
 		});
 
 
-		let table = this.state.loading || this.state.entries.length === 0 ? '' :
+		let table = !this.state.loading && this.state.entries.length > 0 &&
 			<Table
 				records={filteredEntries}
 				allRecords={this.state.entries}
@@ -274,7 +276,7 @@ class FilterableTable extends React.Component {
 				trClassName={this.props.trClassName}
 				style={this.props.style}
 				ref="Table"
-			/>;
+			/>
 
 
 		let totalPages = (filteredEntries && filteredEntries.length > 0) ?

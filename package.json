@@ -1,6 +1,6 @@
 {
   "name": "react-filterable-table",
-  "version": "0.3.4",
+  "version": "0.3.41",
   "description": "Extendable table with filtering, sorting, paging, and more",
   "main": "dist/react-filterable-table.js",
   "scripts": {
