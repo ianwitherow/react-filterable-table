@@ -43,12 +43,12 @@ let fields = [
 ```
 
 ## Props
-
-* `className` - `string` - Class name to apply to the component's root &lt;div&gt; element.
-* `data` - `array` - Static data to bind to.
+###### There are a lot, but most are just for customization. The minimum you need to get running are `data` and `fields`.
+* **`data`** - `array` - Static data to bind to.
+* **`fields`** - `array` - Array of `field`s used for building the table. These fields have their own list of props detailed below.
 * `dataEndpoint` - `string` - If not using a static dataset, this can be used to fetch data with AJAX.
 * `onDataReceived` - `fn` - This is called (passing the array of data) before the data is rendered. Any necessary data transformations (date parsing, etc) can be done here.
-* `fields` - `array` - Array of `field`s used for building the table. These fields have their own list of props detailed below.
+* `className` - `string` - Class name to apply to the component's root &lt;div&gt; element.
 * `tableClassName` - `string` - Class name to apply to the component's &lt;table&gt; element.
 * `trClassName` - `string` or `fn` - Class name to apply to the &lt;tr&gt; elements. If a function is passed, it's called with the `record` and `index` as parameters: `function (record, index)`
 * `footerTrClassName` - `string` - Class name of the footer's &lt;tr&gt; element.
