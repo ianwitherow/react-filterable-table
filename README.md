@@ -12,7 +12,7 @@ Extendable table with filtering, sorting, paging, and more.
 
 ## Basic usage:
 
-```
+```javascript
 let FilterableTable = require('react-filterable-table');
 
 // Data for the table to display; can be anything
@@ -92,7 +92,7 @@ let fields = [
 
 ## Example using a `render` function
 
-```
+```javascript
 let renderAge = (props) => {
 	/*
 	 * This props object looks like this:
