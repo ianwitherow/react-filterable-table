@@ -277,6 +277,11 @@ return /******/ (function(modules) { // webpackBootstrap
 					exactFilters: exactFilters,
 					page: 0
 				});
+
+				// Call callback if supplied
+				if (this.props.onFilterAdded) {
+					this.props.onFilterAdded(thisFilter);
+				}
 			}
 		}, {
 			key: 'removeExactFilter',
@@ -294,6 +299,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				});
 				this.scrollIntoView();
 
+				// Call callback if supplied
 				if (this.props.onFilterRemoved) {
 					this.props.onFilterRemoved(removedFilter, e);
 				}

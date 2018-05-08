@@ -167,6 +167,11 @@ class FilterableTable extends React.Component {
 			exactFilters,
 			page: 0
 		});
+
+		// Call callback if supplied
+		if (this.props.onFilterAdded) {
+			this.props.onFilterAdded(thisFilter);
+		}
 	}
 
 	removeExactFilter(filter, e) {
@@ -182,6 +187,7 @@ class FilterableTable extends React.Component {
 		});
 		this.scrollIntoView();
 
+		// Call callback if supplied
 		if (this.props.onFilterRemoved) {
 			this.props.onFilterRemoved(removedFilter, e);
 		}
