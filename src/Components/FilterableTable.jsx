@@ -169,17 +169,22 @@ class FilterableTable extends React.Component {
 		});
 	}
 
-	removeExactFilter(filter) {
+	removeExactFilter(filter, e) {
 		let { exactFilters } = this.state;
 		let index = exactFilters.indexOf(filter);
+		let removedFilter = null;
 		if (index > -1) {
-			exactFilters.splice(index, 1);
+			removedFilter = exactFilters.splice(index, 1).pop();
 		}
 		this.setState({
 			exactFilters,
 			page: 0
 		});
 		this.scrollIntoView();
+
+		if (this.props.onFilterRemoved) {
+			this.props.onFilterRemoved(removedFilter, e);
+		}
 	}
 
 

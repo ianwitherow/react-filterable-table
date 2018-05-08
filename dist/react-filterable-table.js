@@ -280,18 +280,23 @@ return /******/ (function(modules) { // webpackBootstrap
 			}
 		}, {
 			key: 'removeExactFilter',
-			value: function removeExactFilter(filter) {
+			value: function removeExactFilter(filter, e) {
 				var exactFilters = this.state.exactFilters;
 
 				var index = exactFilters.indexOf(filter);
+				var removedFilter = null;
 				if (index > -1) {
-					exactFilters.splice(index, 1);
+					removedFilter = exactFilters.splice(index, 1).pop();
 				}
 				this.setState({
 					exactFilters: exactFilters,
 					page: 0
 				});
 				this.scrollIntoView();
+
+				if (this.props.onFilterRemoved) {
+					this.props.onFilterRemoved(removedFilter, e);
+				}
 			}
 		}, {
 			key: 'updatePage',
@@ -978,8 +983,8 @@ return /******/ (function(modules) { // webpackBootstrap
 						{ className: "filter-item-title" },
 						_react2.default.createElement(
 							"span",
-							{ className: "filter-item-remove", onClick: function onClick() {
-									return removeFilter(filter);
+							{ className: "filter-item-remove", onClick: function onClick(e) {
+									return removeFilter(filter, e);
 								} },
 							_react2.default.createElement("span", { className: "fa fa-times" })
 						),
