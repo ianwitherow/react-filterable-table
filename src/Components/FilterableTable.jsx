@@ -76,6 +76,9 @@ class FilterableTable extends React.Component {
 		if (nextProps.hasOwnProperty('initialSortDir')) {
 			this.setState({ sortDir: nextProps.initialSortDir });
 		}
+		if (nextProps.hasOwnProperty('loading')) {
+			this.setState({ loading: nextProps.loading });
+		}
 	}
 
 	loadData(e) {
@@ -240,10 +243,13 @@ class FilterableTable extends React.Component {
 
 	render() {
 
-		let loading = !this.state.loading ? '' :
-			<div className="well text-center">
-				Loading...
-			</div>;
+		let loading = this.state.loading &&
+			(
+				this.props.loadingMessage || 
+				<div className="well text-center">
+					Loading...
+				</div>
+			)
 
 		let serverErrorMessage = this.state.serverError &&
 			(

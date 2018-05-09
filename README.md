@@ -58,6 +58,7 @@ let fields = [
 * `noRecordsMessage` - `string` - Message to show when there are no records
 * `noFilteredRecordsMessage` - `string` - Message to show when the user has applied filters which result in no records to show
 * `serverErrorMessage` - `string` or `object` - Message to show when an error is encountered from the `dataEndpoint` (if used). Can be a string or a React component
+* `loadingMessage` - `string` or `object` - Message to show when the component is loading data
 * `recordCountName` - `string` - Verbiage to use at the top where it says "X results". For example, "1 giraffe"
 * `recordCountNamePlural` - `string` - Verbiage to use when there are more than 1 results (or 0). For example, "3 giraffes"
 * `headerVisible` - `bool` - Whether or not to show the header

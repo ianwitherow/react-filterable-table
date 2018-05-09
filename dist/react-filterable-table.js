@@ -176,6 +176,9 @@ return /******/ (function(modules) { // webpackBootstrap
 				if (nextProps.hasOwnProperty('initialSortDir')) {
 					this.setState({ sortDir: nextProps.initialSortDir });
 				}
+				if (nextProps.hasOwnProperty('loading')) {
+					this.setState({ loading: nextProps.loading });
+				}
 			}
 		}, {
 			key: 'loadData',
@@ -357,11 +360,11 @@ return /******/ (function(modules) { // webpackBootstrap
 			key: 'render',
 			value: function render() {
 
-				var loading = !this.state.loading ? '' : _react2.default.createElement(
+				var loading = this.state.loading && (this.props.loadingMessage || _react2.default.createElement(
 					'div',
 					{ className: 'well text-center' },
 					'Loading...'
-				);
+				));
 
 				var serverErrorMessage = this.state.serverError && (this.props.serverErrorMessage || _react2.default.createElement(
 					'div',
