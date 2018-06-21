@@ -242,6 +242,12 @@ class FilterableTable extends React.Component {
 	}
 
 	render() {
+		let fields = this.props.fields || [];
+
+		// If fields prop was not specified, use object keys of first record as fieldnames
+		if (this.props.fields === undefined && this.state.entries.length > 0) {
+			fields = Object.keys(this.state.entries[0]).map(name => ({ name }));
+		}
 
 		let loading = this.state.loading &&
 			(
@@ -271,15 +277,16 @@ class FilterableTable extends React.Component {
 			sort: this.state.sort,
 			sortDir: this.state.sortDir,
 			stickySorting: this.props.stickySorting,
-			fields: this.props.fields
+			fields: fields
 		});
+
 
 
 		let table = !this.state.loading && this.state.entries.length > 0 &&
 			<Table
 				records={filteredEntries}
 				allRecords={this.state.entries}
-				fields={this.props.fields}
+				fields={fields}
 				filterExact={this.state.filterExact}
 				addExactFilter={this.addExactFilter}
 				updateSort={this.updateSort}

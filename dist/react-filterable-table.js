@@ -359,6 +359,14 @@ return /******/ (function(modules) { // webpackBootstrap
 		}, {
 			key: 'render',
 			value: function render() {
+				var fields = this.props.fields || [];
+
+				// If fields prop was not specified, use object keys of first record as fieldnames
+				if (this.props.fields === undefined && this.state.entries.length > 0) {
+					fields = Object.keys(this.state.entries[0]).map(function (name) {
+						return { name: name };
+					});
+				}
 
 				var loading = this.state.loading && (this.props.loadingMessage || _react2.default.createElement(
 					'div',
@@ -384,13 +392,13 @@ return /******/ (function(modules) { // webpackBootstrap
 					sort: this.state.sort,
 					sortDir: this.state.sortDir,
 					stickySorting: this.props.stickySorting,
-					fields: this.props.fields
+					fields: fields
 				});
 
 				var table = !this.state.loading && this.state.entries.length > 0 && _react2.default.createElement(_Table2.default, {
 					records: filteredEntries,
 					allRecords: this.state.entries,
-					fields: this.props.fields,
+					fields: fields,
 					filterExact: this.state.filterExact,
 					addExactFilter: this.addExactFilter,
 					updateSort: this.updateSort,
@@ -1029,6 +1037,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var hasValue = __webpack_require__(5);
 
 	function FilterAndSort(array, options) {
+		array = array || [];
 		var filter = options.filter,
 		    exactFilters = options.exactFilters,
 		    sort = options.sort,
