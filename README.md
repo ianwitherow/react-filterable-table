@@ -13,10 +13,10 @@ Extendable table with filtering, sorting, paging, and more.
 ## Basic usage:
 
 ```javascript
-let FilterableTable = require('react-filterable-table');
+const FilterableTable = require('react-filterable-table');
 
 // Data for the table to display; can be anything
-let data = [
+const data = [
 	{ name: "Steve", age: 27, job: "Sandwich Eater" },
 	{ name: "Gary", age: 35, job: "Falafeler" },
 	{ name: "Greg", age: 24, job: "Jelly Bean Juggler" },
@@ -25,7 +25,7 @@ let data = [
 ];
 
 // Fields to show in the table, and what object properties in the data they bind to
-let fields = [
+const fields = [
 	{ name: 'name', displayName: "Name", inputFilterable: true, sortable: true },
 	{ name: 'age', displayName: "Age", inputFilterable: true, exactFilterable: true, sortable: true },
 	{ name: 'job', displayName: "Occupation", inputFilterable: true, exactFilterable: true, sortable: true }
@@ -95,7 +95,7 @@ let fields = [
 ## Example using a `render` function
 
 ```javascript
-let renderAge = (props) => {
+const renderAge = (props) => {
 	/*
 	 * This props object looks like this:
 	 * {
@@ -106,8 +106,8 @@ let renderAge = (props) => {
 	 */
 
 	// If they are over 60, use the "blind" icon, otherwise use a motorcycle
-	let iconClassName = "fa fa-" + (props.value > 60 ? "blind" : "motorcycle");
-	let personName = props.record.name;
+	const iconClassName = "fa fa-" + (props.value > 60 ? "blind" : "motorcycle");
+	const personName = props.record.name;
 
 	return (
 		<span title={personName + "'s Age"}>
@@ -117,13 +117,13 @@ let renderAge = (props) => {
 };
 
 
-let data = [
+const data = [
 	...
 	{ name: "Steve", age: 27, job: "Sandwich Eater" },
 	...
 ];
 
-let fields = [
+const fields = [
 	...
 	{ name: 'age', displayName: "Age", inputFilterable: true, exactFilterable: true, sortable: true, someRandomProp: "Tacos!", render: renderAge },
 	...
