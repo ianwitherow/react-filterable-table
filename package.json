@@ -1,6 +1,6 @@
 {
   "name": "react-filterable-table",
-  "version": "0.3.426",
+  "version": "0.3.427",
   "description": "Extendable table with filtering, sorting, paging, and more",
   "main": "dist/react-filterable-table.js",
   "scripts": {
@@ -21,6 +21,7 @@
   ],
   "dependencies": {
     "axios": "^0.15.3",
+    "npm": "^6.1.0",
     "react-pager": "^1.3.2"
   },
   "peerDependencies": {

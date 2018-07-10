@@ -150,16 +150,6 @@ return /******/ (function(modules) { // webpackBootstrap
 			key: 'componentDidMount',
 			value: function componentDidMount() {
 				this.loadData();
-				// focus the search input when '/' is pressed
-				window.onkeydown = function (e) {
-					// Don't focus if the active element is one of these
-					var ignoredTags = ["INPUT", "SELECT"];
-					// 191 is '/'
-					if (e.which === 191 && ignoredTags.indexOf(document.activeElement.tagName) < 0) {
-						e.preventDefault();
-						document.querySelector("input.filter-input").focus();
-					}
-				};
 			}
 		}, {
 			key: 'componentWillReceiveProps',
