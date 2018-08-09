@@ -66,7 +66,7 @@ function FilterAndSort(array, options) {
 					// For dates, we'll need different "emptySortCompare" values
 					// If desc, set to some really early date, like 1/1/1000.
 					// If asc, set to some really late date, like 1/1/2999.
-					let emptySortCompare = !hasValue(sortDir) ? new Date("1/1/1000") : new Date("1/1/2999");
+					let emptySortCompare = !sortDir ? new Date("1/1/1000") : new Date("1/1/2999");
 					recordA = hasValue(a[sort]) ? a[sort] : emptySortCompare;
 					recordB = hasValue(b[sort]) ? b[sort] : emptySortCompare;
 				} else if (typeof a[sort] === "number" || typeof b[sort] === "number") {

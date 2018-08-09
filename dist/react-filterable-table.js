@@ -1088,7 +1088,7 @@ return /******/ (function(modules) { // webpackBootstrap
 						// For dates, we'll need different "emptySortCompare" values
 						// If desc, set to some really early date, like 1/1/1000.
 						// If asc, set to some really late date, like 1/1/2999.
-						var _emptySortCompare = !hasValue(sortDir) ? new Date("1/1/1000") : new Date("1/1/2999");
+						var _emptySortCompare = !sortDir ? new Date("1/1/1000") : new Date("1/1/2999");
 						recordA = hasValue(a[sort]) ? a[sort] : _emptySortCompare;
 						recordB = hasValue(b[sort]) ? b[sort] : _emptySortCompare;
 					} else if (typeof a[sort] === "number" || typeof b[sort] === "number") {
