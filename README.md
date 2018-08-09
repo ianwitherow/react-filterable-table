@@ -45,7 +45,7 @@ const fields = [
 ## Props
 ###### There are a lot, but most are just for customization. The minimum you need to get running are `data` and `fields`
 * **`data`** - `array` - Static data to bind to
-* **`fields`** - `array` - Array of `field`s used for building the table. These fields have their own list of props detailed below
+* **`fields`** - `array` - Array of `field`s (see below) used for building the table. These fields have their own list of props detailed below
 * `dataEndpoint` - `string` - If not using a static dataset, this can be used to fetch data with AJAX
 * `onDataReceived` - `fn` - This is called (passing the array of data) before the data is rendered. Any necessary data transformations (date parsing, etc) can be done here
 * `className` - `string` - Class name to apply to the component's root &lt;div&gt; element
@@ -77,7 +77,7 @@ const fields = [
 
 ## `field` Props
 
-* `name` - `string` - Name of the property on the `data` object
+* **`name`** - `string` - Name of the property on the `data` object
 * `displayName` - `string` - Field name as it will appear in the table header. If ommitted, `name` is used
 * `sortFieldName` - `string` - Field to use when sorting if you want to sort using a different value from what's displayed. For example, A+, A, B, C would normally sort as A, A+, B, C. You could have a separate field that maps those values to an integer, then use that field for sorting
 * `inputFilterable` - `bool` - Whether or not this field should be filtered when the user types in the Filter text box at the top
