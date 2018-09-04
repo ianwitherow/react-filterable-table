@@ -1,5 +1,6 @@
 import React from 'react';
 const hasValue = require('../Helpers/hasValue');
+const getValue = require('../Helpers/getValue');
 
 class Table extends React.Component {
 	constructor(props) {
@@ -76,11 +77,11 @@ class Table extends React.Component {
 				let tdClassName = field.tdClassName || null;
 
 				// Build out the body of the <td>
-				let recordBody = record[field.name];
+				let recordBody = getValue(record, field.name);
 
 				// If this field has a render function, call it with some props
 				const renderProps = {
-					value: record[field.name],
+					value: recordBody,
 					record,
 					records: this.props.allRecords,
 					filteredRecords: records,
@@ -115,7 +116,7 @@ class Table extends React.Component {
 				}
 
 				let tdContent = hasValue(recordBody)
-					?  <span className={spanClassName} onClick={field.exactFilterable ? () => addExactFilter(record[field.name], field.name, (fieldDisplayName)) : null}>
+					?  <span className={spanClassName} onClick={field.exactFilterable ? () => addExactFilter(getValue(record, field.name), field.name, (fieldDisplayName)) : null}>
 							{recordBody}
 						</span>
 					: null;

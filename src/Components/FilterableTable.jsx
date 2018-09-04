@@ -56,17 +56,20 @@ class FilterableTable extends React.Component {
 	componentWillReceiveProps(nextProps) {
 		// If the `data` prop changes, make sure we run our onDataReceived callback (if supplied)
 		// and set our states
-		if (nextProps.hasOwnProperty('data')) {
+		if (nextProps.hasOwnProperty('data') && nextProps.data !== this.props.data) {
 			this.setData(nextProps.data);
+			console.log("Setting data");
 		}
 
-		if (nextProps.hasOwnProperty('initialSort')) {
+		if (nextProps.hasOwnProperty('initialSort') && nextProps.initialSort !== this.props.initialSort) {
 			this.setState({ sort: nextProps.initialSort });
+			console.log("Setting sort");
 		}
-		if (nextProps.hasOwnProperty('initialSortDir')) {
+		if (nextProps.hasOwnProperty('initialSortDir') && nextProps.initialSortDir !== this.props.initialSortDir) {
 			this.setState({ sortDir: nextProps.initialSortDir });
+			console.log("Setting sort");
 		}
-		if (nextProps.hasOwnProperty('loading')) {
+		if (nextProps.hasOwnProperty('loading') && nextProps.loading !== this.props.loading) {
 			this.setState({ loading: nextProps.loading });
 		}
 	}
