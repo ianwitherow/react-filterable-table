@@ -1,5 +1,5 @@
 # react-filterable-table
-Extendable table with filtering, sorting, paging, and more.
+Extendable table with filtering, sorting, paging, and more. Hold down shift to sort on multiple fields.
 
 
 [Demo](https://ianwitherow.github.io/react-filterable-table/example/index.html)
@@ -52,6 +52,10 @@ const fields = [
 * `tableClassName` - `string` - Class name to apply to the component's &lt;table&gt; element
 * `trClassName` - `string` or `fn` - Class name to apply to the &lt;tr&gt; elements. If a function is passed, it's called with the `record` and `index` as parameters: `function (record, index)`
 * `footerTrClassName` - `string` - Class name of the footer's &lt;tr&gt; element
+* `iconSortAsc` - `object` - Element to use for the asc sort icon next to a field name
+* `iconSort` - `object` - Element to use for the default sort icon next to a field name. If not provided, the default uses icons from FontAwesome.
+* `iconSortedDesc` - `object` - Element to use for the desc sort icon next to a field name. If not provided, the default uses icons from FontAwesome.
+* `iconSortedDesc` - `object` - Element to use for the desc sort icon next to a field name. If not provided, the default uses icons from FontAwesome.
 * `initialSort` - `string` - The field name on which to sort on initially
 * `initialSortDir` - `bool` - The sort direction to use initially - true is ascending, false is descending. Default: `true`
 * `stickySorting` - `bool` - If true, empty values will always sort to the bottom. Default: `false`

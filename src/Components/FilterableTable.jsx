@@ -13,15 +13,15 @@ class FilterableTable extends React.Component {
 		this.state = {
 			loading: false,
 			entries: this.props.data || [],
-			sort: this.props.initialSort,
-			sortDir: (typeof this.props.initialSortDir === "boolean") ? this.props.initialSortDir : true,
+			sortFields: [ { name: this.props.initialSort, reverse: (typeof this.props.initialSortDir === "boolean") ? !this.props.initialSortDir : false }],
 			filter: '',
 			exactFilters: [],
 			serverError: false,
 			totalPages: 1,
 			visiblePages: 5,
 			page: 0,
-			pageSize: +localStorage.getItem(this.props.namespace + '.PageSize') || this.props.pageSize || 10
+			pageSize: +localStorage.getItem(this.props.namespace + '.PageSize') || this.props.pageSize || 10,
+			shiftDown: false
 		}
 
 		this.loadData = this.loadData.bind(this);
@@ -51,6 +51,22 @@ class FilterableTable extends React.Component {
 
 	componentDidMount() {
 		this.loadData();
+		// Keep track of shift key
+		window.addEventListener("keydown", (e) => {
+			if (e.which === 16) { // Shift
+				if (!this.state.shiftDown) {
+					this.setState({ shiftDown: true });
+				}
+			}
+		});
+		window.addEventListener("keyup", (e) => {
+			if (e.which === 16) { // Shift
+				if (this.state.shiftDown) {
+					this.setState({ shiftDown: false });
+				}
+			}
+		});
+
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -58,20 +74,24 @@ class FilterableTable extends React.Component {
 		// and set our states
 		if (nextProps.hasOwnProperty('data') && nextProps.data !== this.props.data) {
 			this.setData(nextProps.data);
-			console.log("Setting data");
 		}
 
-		if (nextProps.hasOwnProperty('initialSort') && nextProps.initialSort !== this.props.initialSort) {
-			this.setState({ sort: nextProps.initialSort });
-			console.log("Setting sort");
+		if (nextProps.hasOwnProperty('sortFields') && nextProps.sortFields !== this.props.sortFields) {
+			this.setState({ sort: nextProps.sortFields });
 		}
-		if (nextProps.hasOwnProperty('initialSortDir') && nextProps.initialSortDir !== this.props.initialSortDir) {
-			this.setState({ sortDir: nextProps.initialSortDir });
-			console.log("Setting sort");
-		}
+
 		if (nextProps.hasOwnProperty('loading') && nextProps.loading !== this.props.loading) {
 			this.setState({ loading: nextProps.loading });
 		}
+
+	}
+
+	shouldComponentUpdate(nextProps, nextState) {
+		if (nextState.hasOwnProperty("shiftDown") && nextState.shiftDown !== this.state.shiftDown) {
+			// Don't re-render when holding down shift
+			return false;
+		}
+		return true;
 	}
 
 	loadData(e) {
@@ -118,7 +138,7 @@ class FilterableTable extends React.Component {
 			entries,
 			loading: false,
 			serverError: false,
-			page: 0
+			page: this.props.maintainPageOnSetData ? this.state.page : 0
 		});
 
 	}
@@ -209,17 +229,27 @@ class FilterableTable extends React.Component {
 	}
 
 	updateSort(sort) {
-		let sortDir = this.state.sortDir;
-		if (sort === this.state.sort) {
-			// If sorting again on the same field, switch the sort direction
-			sortDir = !sortDir;
+		let append = this.state.shiftDown;
+		let sortFields = this.state.sortFields.concat();
+		let sortField = sortFields.find(sf => sf.name === sort);
+		let alreadyExists = sortField !== undefined;
+		if (alreadyExists) {
+			// Swap direction
+			sortField.reverse = !sortField.reverse;
 		} else {
-			// Default to asc when sorting on new field
-			sortDir = true;
+			// Add to sort
+			sortField = { name: sort, reverse: false };
 		}
+
+		if (append && !alreadyExists) {
+			sortFields.push(sortField);
+		}
+		if (!append) {
+			sortFields = [sortField];
+		}
+
 		this.setState({
-			sort,
-			sortDir,
+			sortFields,
 			page: 0
 		});
 	}
@@ -267,8 +297,7 @@ class FilterableTable extends React.Component {
 		let filteredEntries = FilterAndSort(this.state.entries, {
 			filter: this.state.filter,
 			exactFilters: this.state.exactFilters,
-			sort: this.state.sort,
-			sortDir: this.state.sortDir,
+			sortFields: this.state.sortFields,
 			stickySorting: this.props.stickySorting,
 			fields: fields
 		});
@@ -283,8 +312,10 @@ class FilterableTable extends React.Component {
 				filterExact={this.state.filterExact}
 				addExactFilter={this.addExactFilter}
 				updateSort={this.updateSort}
-				sort={this.state.sort}
-				sortDir={this.state.sortDir}
+				sortFields={this.state.sortFields}
+				iconSort={this.props.iconSort}
+				iconSortedAsc={this.props.iconSortedAsc}
+				iconSortedDesc={this.props.iconSortedDesc}
 				page={this.state.page}
 				pageSize={this.state.pageSize}
 				pagersVisible={this.props.pagersVisible}

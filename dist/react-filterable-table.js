@@ -120,15 +120,15 @@ return /******/ (function(modules) { // webpackBootstrap
 			_this.state = {
 				loading: false,
 				entries: _this.props.data || [],
-				sort: _this.props.initialSort,
-				sortDir: typeof _this.props.initialSortDir === "boolean" ? _this.props.initialSortDir : true,
+				sortFields: [{ name: _this.props.initialSort, reverse: typeof _this.props.initialSortDir === "boolean" ? !_this.props.initialSortDir : false }],
 				filter: '',
 				exactFilters: [],
 				serverError: false,
 				totalPages: 1,
 				visiblePages: 5,
 				page: 0,
-				pageSize: +localStorage.getItem(_this.props.namespace + '.PageSize') || _this.props.pageSize || 10
+				pageSize: +localStorage.getItem(_this.props.namespace + '.PageSize') || _this.props.pageSize || 10,
+				shiftDown: false
 			};
 
 			_this.loadData = _this.loadData.bind(_this);
@@ -149,7 +149,26 @@ return /******/ (function(modules) { // webpackBootstrap
 		_createClass(FilterableTable, [{
 			key: 'componentDidMount',
 			value: function componentDidMount() {
+				var _this2 = this;
+
 				this.loadData();
+				// Keep track of shift key
+				window.addEventListener("keydown", function (e) {
+					if (e.which === 16) {
+						// Shift
+						if (!_this2.state.shiftDown) {
+							_this2.setState({ shiftDown: true });
+						}
+					}
+				});
+				window.addEventListener("keyup", function (e) {
+					if (e.which === 16) {
+						// Shift
+						if (_this2.state.shiftDown) {
+							_this2.setState({ shiftDown: false });
+						}
+					}
+				});
 			}
 		}, {
 			key: 'componentWillReceiveProps',
@@ -158,25 +177,29 @@ return /******/ (function(modules) { // webpackBootstrap
 				// and set our states
 				if (nextProps.hasOwnProperty('data') && nextProps.data !== this.props.data) {
 					this.setData(nextProps.data);
-					console.log("Setting data");
 				}
 
-				if (nextProps.hasOwnProperty('initialSort') && nextProps.initialSort !== this.props.initialSort) {
-					this.setState({ sort: nextProps.initialSort });
-					console.log("Setting sort");
+				if (nextProps.hasOwnProperty('sortFields') && nextProps.sortFields !== this.props.sortFields) {
+					this.setState({ sort: nextProps.sortFields });
 				}
-				if (nextProps.hasOwnProperty('initialSortDir') && nextProps.initialSortDir !== this.props.initialSortDir) {
-					this.setState({ sortDir: nextProps.initialSortDir });
-					console.log("Setting sort");
-				}
+
 				if (nextProps.hasOwnProperty('loading') && nextProps.loading !== this.props.loading) {
 					this.setState({ loading: nextProps.loading });
 				}
 			}
 		}, {
+			key: 'shouldComponentUpdate',
+			value: function shouldComponentUpdate(nextProps, nextState) {
+				if (nextState.hasOwnProperty("shiftDown") && nextState.shiftDown !== this.state.shiftDown) {
+					// Don't re-render when holding down shift
+					return false;
+				}
+				return true;
+			}
+		}, {
 			key: 'loadData',
 			value: function loadData(e) {
-				var _this2 = this;
+				var _this3 = this;
 
 				if (e) {
 					e.preventDefault();
@@ -199,9 +222,9 @@ return /******/ (function(modules) { // webpackBootstrap
 					_axios2.default.get(this.props.dataEndpoint).then(function (response) {
 						return response.data;
 					}).then(function (entries) {
-						_this2.setData(entries);
+						_this3.setData(entries);
 					}).catch(function (error) {
-						_this2.setState({
+						_this3.setState({
 							serverError: true,
 							loading: false
 						});
@@ -221,7 +244,7 @@ return /******/ (function(modules) { // webpackBootstrap
 					entries: entries,
 					loading: false,
 					serverError: false,
-					page: 0
+					page: this.props.maintainPageOnSetData ? this.state.page : 0
 				});
 			}
 		}, {
@@ -324,17 +347,29 @@ return /******/ (function(modules) { // webpackBootstrap
 		}, {
 			key: 'updateSort',
 			value: function updateSort(sort) {
-				var sortDir = this.state.sortDir;
-				if (sort === this.state.sort) {
-					// If sorting again on the same field, switch the sort direction
-					sortDir = !sortDir;
+				var append = this.state.shiftDown;
+				var sortFields = this.state.sortFields.concat();
+				var sortField = sortFields.find(function (sf) {
+					return sf.name === sort;
+				});
+				var alreadyExists = sortField !== undefined;
+				if (alreadyExists) {
+					// Swap direction
+					sortField.reverse = !sortField.reverse;
 				} else {
-					// Default to asc when sorting on new field
-					sortDir = true;
+					// Add to sort
+					sortField = { name: sort, reverse: false };
 				}
+
+				if (append && !alreadyExists) {
+					sortFields.push(sortField);
+				}
+				if (!append) {
+					sortFields = [sortField];
+				}
+
 				this.setState({
-					sort: sort,
-					sortDir: sortDir,
+					sortFields: sortFields,
 					page: 0
 				});
 			}
@@ -382,8 +417,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				var filteredEntries = (0, _FilterAndSort2.default)(this.state.entries, {
 					filter: this.state.filter,
 					exactFilters: this.state.exactFilters,
-					sort: this.state.sort,
-					sortDir: this.state.sortDir,
+					sortFields: this.state.sortFields,
 					stickySorting: this.props.stickySorting,
 					fields: fields
 				});
@@ -395,8 +429,10 @@ return /******/ (function(modules) { // webpackBootstrap
 					filterExact: this.state.filterExact,
 					addExactFilter: this.addExactFilter,
 					updateSort: this.updateSort,
-					sort: this.state.sort,
-					sortDir: this.state.sortDir,
+					sortFields: this.state.sortFields,
+					iconSort: this.props.iconSort,
+					iconSortedAsc: this.props.iconSortedAsc,
+					iconSortedDesc: this.props.iconSortedDesc,
 					page: this.state.page,
 					pageSize: this.state.pageSize,
 					pagersVisible: this.props.pagersVisible,
@@ -512,28 +548,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	var Table = function (_React$Component) {
 		_inherits(Table, _React$Component);
 
-		function Table(props) {
+		function Table() {
 			_classCallCheck(this, Table);
 
-			var _this = _possibleConstructorReturn(this, (Table.__proto__ || Object.getPrototypeOf(Table)).call(this, props));
-
-			_this.headerSortClassName = _this.headerSortClassName.bind(_this);
-			return _this;
+			return _possibleConstructorReturn(this, (Table.__proto__ || Object.getPrototypeOf(Table)).apply(this, arguments));
 		}
 
 		_createClass(Table, [{
-			key: 'headerSortClassName',
-			value: function headerSortClassName(field) {
-				// Return the class name for the sort icon
+			key: 'headerSortElement',
+			value: function headerSortElement(field) {
+				// Return the prop element for the sort icon (if provided)
 				if (field.sortable) {
-					if (this.props.sort && (this.props.sort === field.name || this.props.sort === field.sortFieldName)) {
-						if (this.props.sortDir) {
-							return "fa fa-sort-asc";
+					var sortField = this.props.sortFields.find(function (sf) {
+						return sf.name === field.name || sf.name === field.sortFieldName;
+					});
+					if (sortField) {
+						if (!sortField.reverse) {
+							return this.props.iconSortedAsc || _react2.default.createElement('span', { className: 'fa fa-sort-asc' });
 						} else {
-							return "fa fa-sort-desc";
+							return this.props.iconSortedDesc || _react2.default.createElement('span', { className: 'fa fa-sort-desc' });
 						}
 					}
-					return "fa fa-sort";
+					return this.props.iconSort || _react2.default.createElement('span', { className: 'fa fa-sort' });
 				}
 				return null;
 			}
@@ -584,7 +620,7 @@ return /******/ (function(modules) { // webpackBootstrap
 							{ className: field.sortable ? "sortable" : null },
 							fieldDisplayName
 						),
-						_react2.default.createElement('span', { className: _this2.headerSortClassName(field) })
+						_this2.headerSortElement(field)
 					);
 				});
 
@@ -1045,6 +1081,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 	var hasValue = __webpack_require__(5);
 	var getValue = __webpack_require__(6);
 
@@ -1052,8 +1090,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		array = array || [];
 		var filter = options.filter,
 		    exactFilters = options.exactFilters,
-		    sort = options.sort,
-		    sortDir = options.sortDir,
+		    sortFields = options.sortFields,
 		    stickySorting = options.stickySorting,
 		    fields = options.fields;
 
@@ -1090,62 +1127,120 @@ return /******/ (function(modules) { // webpackBootstrap
 		}
 
 		// Sort records if need be
-		if (hasValue(sort)) {
-			records = records.sort(function (a, b) {
+		if (sortFields.length > 0) {
+			var _ret = function () {
+				var sortKeys = {};
+				sortFields.forEach(function (field) {
+					sortKeys[field.name] = field.reverse ? "desc" : "asc";
+				});
+				return {
+					v: MultiSort(records, sortKeys, stickySorting)
+				};
+			}();
 
-				var recordA = getValue(a, sort);
-				var recordB = getValue(b, sort);
-
-				if (stickySorting) {
-
-					// Special rules for sorting different data types
-					// Empty things should always sort last
-					if (typeof recordA === "string" || typeof recordB === "string") {
-						// If desc, set it to 0 so it ends up at the end.
-						// If asc, set to a bunch of zzzz so it ends up at the end.
-						var emptySortCompare = !sortDir ? "0" : "zzzzzzzzzzzz";
-						// For strings, set both to lowercase for comparison
-						recordA = hasValue(recordA) ? recordA.toString().toLowerCase() : emptySortCompare;
-						recordB = hasValue(recordB) ? recordB.toString().toLowerCase() : emptySortCompare;
-					} else if (hasValue(recordA) && typeof recordA.getMonth === "function" || hasValue(recordB) && typeof recordB.getMonth === "function") {
-						// For dates, we'll need different "emptySortCompare" values
-						// If desc, set to some really early date, like 1/1/1000.
-						// If asc, set to some really late date, like 1/1/2999.
-						var _emptySortCompare = !sortDir ? new Date("1/1/1000") : new Date("1/1/2999");
-						recordA = hasValue(recordA) ? recordA : _emptySortCompare;
-						recordB = hasValue(recordB) ? recordB : _emptySortCompare;
-					} else if (typeof recordA === "number" || typeof recordB === "number") {
-						// If desc, set to negative infinity
-						// If asc, set to positive infinity
-						var _emptySortCompare2 = !sortDir ? -Infinity : Infinity;
-						recordA = hasValue(recordA) ? recordA : _emptySortCompare2;
-						recordB = hasValue(recordB) ? recordB : _emptySortCompare2;
-					}
-				}
-
-				if (sortDir) {
-					// Asc
-					if (recordA < recordB) {
-						return -1;
-					}
-					if (recordA > recordB) {
-						return 1;
-					}
-				} else {
-					// Desc
-					if (recordA > recordB) {
-						return -1;
-					}
-					if (recordA < recordB) {
-						return 1;
-					}
-				}
-
-				return 0;
-			});
+			if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
 		}
 		return records;
 	}
+
+	// Push empty values to the bottom, regardless of sort direction
+	function StickySortValues(recordA, recordB, reverse) {
+		if (typeof recordA === "string" || typeof recordB === "string") {
+			// If desc, set it to 0 so it ends up at the end.
+			// If asc, set to a bunch of zzzz so it ends up at the end.
+			var emptySortCompare = reverse ? "0" : "zzzzzzzzzzzz";
+			// For strings, set both to lowercase for comparison
+			recordA = hasValue(recordA) ? recordA.toString().toLowerCase() : emptySortCompare;
+			recordB = hasValue(recordB) ? recordB.toString().toLowerCase() : emptySortCompare;
+		} else if (hasValue(recordA) && typeof recordA.getMonth === "function" || hasValue(recordB) && typeof recordB.getMonth === "function") {
+			// For dates, we'll need different "emptySortCompare" values
+			// If desc, set to some really early date, like 1/1/1000.
+			// If asc, set to some really late date, like 1/1/2999.
+			var _emptySortCompare = reverse ? new Date("1/1/1000") : new Date("1/1/2999");
+			recordA = hasValue(recordA) ? recordA : _emptySortCompare;
+			recordB = hasValue(recordB) ? recordB : _emptySortCompare;
+		} else if (typeof recordA === "number" || typeof recordB === "number") {
+			// If desc, set to negative infinity
+			// If asc, set to positive infinity
+			var _emptySortCompare2 = reverse ? -Infinity : Infinity;
+			recordA = hasValue(recordA) ? recordA : _emptySortCompare2;
+			recordB = hasValue(recordB) ? recordB : _emptySortCompare2;
+		}
+
+		return { a: recordA, b: recordB };
+	}
+
+	// Adapted from: https://stackoverflow.com/questions/2784230/how-do-you-sort-an-array-on-multiple-columns#answer-15668310
+	function MultiSort(array, keys, stickySort) {
+
+		keys = keys || {};
+
+		// via
+		// https://stackoverflow.com/questions/5223/length-of-javascript-object-ie-associative-array
+		var obLen = function obLen(obj) {
+			var size = 0,
+			    key;
+			for (key in obj) {
+				if (obj.hasOwnProperty(key)) size++;
+			}
+			return size;
+		};
+
+		var obIx = function obIx(obj, ix) {
+			return Object.keys(obj)[ix];
+		};
+
+		var keySort = function keySort(a, b, d) {
+			d = d !== null ? d : 1;
+
+			if (stickySort) {
+				var sortDirection = d === -1;
+				var stickyValues = StickySortValues(a, b, sortDirection);
+				a = stickyValues.a;
+				b = stickyValues.b;
+			}
+
+			// force any string values to lowercase
+			a = typeof a === 'string' ? a.toLowerCase() : a;
+			b = typeof b === 'string' ? b.toLowerCase() : b;
+
+			// Return either 1 or -1  *d to indicate a sort priority. d is sort direction
+			if (a > b) {
+				return 1 * d;
+			}
+			if (a < b) {
+				return -1 * d;
+			}
+			// returning 0, undefined or any falsey value will use subsequent sorts or
+			// the index as a tiebreaker
+			return 0;
+		};
+
+		var KL = obLen(keys);
+
+		if (!KL) return array.sort(keySort);
+
+		for (var k in keys) {
+			// asc unless desc or skip
+			keys[k] = keys[k] == 'desc' || keys[k] == -1 ? -1 : keys[k] == 'skip' || keys[k] === 0 ? 0 : 1;
+		}
+
+		array.sort(function (a, b) {
+			var sorted = 0,
+			    ix = 0;
+
+			while (sorted === 0 && ix < KL) {
+				var k = obIx(keys, ix);
+				if (k) {
+					var dir = keys[k];
+					sorted = keySort(getValue(a, k), getValue(b, k), dir);
+					ix++;
+				}
+			}
+			return sorted;
+		});
+		return array;
+	};
 
 	module.exports = FilterAndSort;
 

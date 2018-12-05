@@ -3,22 +3,19 @@ const hasValue = require('../Helpers/hasValue');
 const getValue = require('../Helpers/getValue');
 
 class Table extends React.Component {
-	constructor(props) {
-		super(props);
-		this.headerSortClassName = this.headerSortClassName.bind(this);
-	}
 
-	headerSortClassName(field) {
-		// Return the class name for the sort icon
+	headerSortElement(field) {
+		// Return the prop element for the sort icon (if provided)
 		if (field.sortable) {
-			if (this.props.sort && (this.props.sort === field.name || this.props.sort === field.sortFieldName)) {
-				if (this.props.sortDir) {
-					return "fa fa-sort-asc";
+			let sortField = this.props.sortFields.find(sf => sf.name === field.name || sf.name === field.sortFieldName);
+			if (sortField) {
+				if (!sortField.reverse) {
+					return this.props.iconSortedAsc || <span className="fa fa-sort-asc" />;
 				} else {
-					return "fa fa-sort-desc";
+					return this.props.iconSortedDesc || <span className="fa fa-sort-desc" />;
 				}
 			}
-			return "fa fa-sort";
+			return this.props.iconSort || <span className="fa fa-sort" />;
 		}
 		return null;
 	}
@@ -59,7 +56,7 @@ class Table extends React.Component {
 			return (
 				<th onClick={field.sortable ? () => updateSort(field.sortFieldName || field.name) : null} className={field.thClassName ? field.thClassName : null} key={i} title={field.title || null}>
 					<span className={field.sortable ? "sortable" : null}>{fieldDisplayName}</span>
-					<span className={this.headerSortClassName(field)}></span>
+					{this.headerSortElement(field)}
 				</th>
 			);
 		});
