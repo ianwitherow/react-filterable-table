@@ -58,7 +58,6 @@ const fields = [
 * `iconSortedDesc` - `object` - Element to use for the desc sort icon next to a field name. If not provided, the default uses icons from FontAwesome.
 * `initialSort` - `string` - The field name on which to sort on initially
 * `initialSortDir` - `bool` - The sort direction to use initially - true is ascending, false is descending. Default: `true`
-* `stickySorting` - `bool` - If true, empty values will always sort to the bottom. Default: `false`
 * `noRecordsMessage` - `string` - Message to show when there are no records
 * `noFilteredRecordsMessage` - `string` - Message to show when the user has applied filters which result in no records to show
 * `serverErrorMessage` - `string` or `object` - Message to show when an error is encountered from the `dataEndpoint` (if used). Can be a string or a React component

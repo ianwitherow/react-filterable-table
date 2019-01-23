@@ -7,7 +7,6 @@ function FilterAndSort(array, options) {
 		filter,
 		exactFilters,
 		sortFields,
-		stickySorting,
 		fields
 	} = options;
 
@@ -51,41 +50,13 @@ function FilterAndSort(array, options) {
 		sortFields.forEach(field => {
 			sortKeys[field.name] = (field.reverse) ? "desc" : "asc";
 		});
-		return MultiSort(records, sortKeys, stickySorting);
+		return MultiSort(records, sortKeys);
 	}
 	return records;
 }
 
-// Push empty values to the bottom, regardless of sort direction
-function StickySortValues(recordA, recordB, reverse) {
-	if (typeof recordA === "string" || typeof recordB === "string") {
-		// If desc, set it to 0 so it ends up at the end.
-		// If asc, set to a bunch of zzzz so it ends up at the end.
-		let emptySortCompare = reverse ? "0" : "zzzzzzzzzzzz";
-		// For strings, set both to lowercase for comparison
-		recordA = hasValue(recordA) ? recordA.toString().toLowerCase() : emptySortCompare;
-		recordB = hasValue(recordB) ? recordB.toString().toLowerCase() : emptySortCompare;
-	} else if ((hasValue(recordA) && typeof recordA.getMonth === "function") || (hasValue(recordB) && typeof recordB.getMonth === "function")) {
-		// For dates, we'll need different "emptySortCompare" values
-		// If desc, set to some really early date, like 1/1/1000.
-		// If asc, set to some really late date, like 1/1/2999.
-		let emptySortCompare = reverse ? new Date("1/1/1000") : new Date("1/1/2999");
-		recordA = hasValue(recordA) ? recordA : emptySortCompare;
-		recordB = hasValue(recordB) ? recordB : emptySortCompare;
-	} else if (typeof recordA === "number" || typeof recordB === "number") {
-		// If desc, set to negative infinity
-		// If asc, set to positive infinity
-		let emptySortCompare = reverse ? -Infinity : Infinity;
-		recordA = hasValue(recordA) ? recordA : emptySortCompare;
-		recordB = hasValue(recordB) ? recordB : emptySortCompare;
-	}
-
-	return { a: recordA, b: recordB };
-}
-
-
 // Adapted from: https://stackoverflow.com/questions/2784230/how-do-you-sort-an-array-on-multiple-columns#answer-15668310
-function MultiSort(array, keys, stickySort) {
+function MultiSort(array, keys) {
 
 	keys = keys || {};
 
@@ -107,17 +78,19 @@ function MultiSort(array, keys, stickySort) {
 	var keySort = function(a, b, d) {
 		d = d !== null ? d : 1;
 
-		if (stickySort) {
-			let sortDirection = d === -1;
-			let stickyValues = StickySortValues(a, b, sortDirection);
-			a = stickyValues.a;
-			b = stickyValues.b;
-		}
+		a = (hasValue(a)) ? a : null;
+		b = (hasValue(b)) ? b : null;
 
 		// force any string values to lowercase
 		a = typeof a === 'string' ? a.toLowerCase() : a;
 		b = typeof b === 'string' ? b.toLowerCase() : b;
 
+		if (a === null) {
+			return 1;
+		}
+		if (b === null) {
+			return -1;
+		}
 		// Return either 1 or -1  *d to indicate a sort priority. d is sort direction
 		if (a > b) {
 			return 1 * d;

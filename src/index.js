@@ -1,1 +1,3 @@
-module.exports = require('./Components/FilterableTable.jsx');
+const FilterableTable = require('./Components/FilterableTable.jsx');
+module.exports = FilterableTable;
+export { FilterableTable };

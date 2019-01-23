@@ -43,7 +43,6 @@ class FilterableTable extends React.Component {
 		return {
 			noRecordsMessage: "There are no records to display",
 			noFilteredRecordsMessage: "There are no records to display",
-			stickySorting: false,
 			tableClassName: "table table-condensed table-hover filterable-table",
 			pageSizes: [10, 20, 30, 50]
 		}
@@ -298,7 +297,6 @@ class FilterableTable extends React.Component {
 			filter: this.state.filter,
 			exactFilters: this.state.exactFilters,
 			sortFields: this.state.sortFields,
-			stickySorting: this.props.stickySorting,
 			fields: fields
 		});
 

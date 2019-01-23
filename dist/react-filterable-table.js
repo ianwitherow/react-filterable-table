@@ -63,7 +63,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	module.exports = __webpack_require__(2);
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var FilterableTable = __webpack_require__(2);
+	module.exports = FilterableTable;
+	exports.FilterableTable = FilterableTable;
 
 /***/ },
 /* 2 */
@@ -418,7 +423,6 @@ return /******/ (function(modules) { // webpackBootstrap
 					filter: this.state.filter,
 					exactFilters: this.state.exactFilters,
 					sortFields: this.state.sortFields,
-					stickySorting: this.props.stickySorting,
 					fields: fields
 				});
 
@@ -502,7 +506,6 @@ return /******/ (function(modules) { // webpackBootstrap
 				return {
 					noRecordsMessage: "There are no records to display",
 					noFilteredRecordsMessage: "There are no records to display",
-					stickySorting: false,
 					tableClassName: "table table-condensed table-hover filterable-table",
 					pageSizes: [10, 20, 30, 50]
 				};
@@ -1091,7 +1094,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		var filter = options.filter,
 		    exactFilters = options.exactFilters,
 		    sortFields = options.sortFields,
-		    stickySorting = options.stickySorting,
 		    fields = options.fields;
 
 
@@ -1134,7 +1136,7 @@ return /******/ (function(modules) { // webpackBootstrap
 					sortKeys[field.name] = field.reverse ? "desc" : "asc";
 				});
 				return {
-					v: MultiSort(records, sortKeys, stickySorting)
+					v: MultiSort(records, sortKeys)
 				};
 			}();
 
@@ -1143,35 +1145,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		return records;
 	}
 
-	// Push empty values to the bottom, regardless of sort direction
-	function StickySortValues(recordA, recordB, reverse) {
-		if (typeof recordA === "string" || typeof recordB === "string") {
-			// If desc, set it to 0 so it ends up at the end.
-			// If asc, set to a bunch of zzzz so it ends up at the end.
-			var emptySortCompare = reverse ? "0" : "zzzzzzzzzzzz";
-			// For strings, set both to lowercase for comparison
-			recordA = hasValue(recordA) ? recordA.toString().toLowerCase() : emptySortCompare;
-			recordB = hasValue(recordB) ? recordB.toString().toLowerCase() : emptySortCompare;
-		} else if (hasValue(recordA) && typeof recordA.getMonth === "function" || hasValue(recordB) && typeof recordB.getMonth === "function") {
-			// For dates, we'll need different "emptySortCompare" values
-			// If desc, set to some really early date, like 1/1/1000.
-			// If asc, set to some really late date, like 1/1/2999.
-			var _emptySortCompare = reverse ? new Date("1/1/1000") : new Date("1/1/2999");
-			recordA = hasValue(recordA) ? recordA : _emptySortCompare;
-			recordB = hasValue(recordB) ? recordB : _emptySortCompare;
-		} else if (typeof recordA === "number" || typeof recordB === "number") {
-			// If desc, set to negative infinity
-			// If asc, set to positive infinity
-			var _emptySortCompare2 = reverse ? -Infinity : Infinity;
-			recordA = hasValue(recordA) ? recordA : _emptySortCompare2;
-			recordB = hasValue(recordB) ? recordB : _emptySortCompare2;
-		}
-
-		return { a: recordA, b: recordB };
-	}
-
 	// Adapted from: https://stackoverflow.com/questions/2784230/how-do-you-sort-an-array-on-multiple-columns#answer-15668310
-	function MultiSort(array, keys, stickySort) {
+	function MultiSort(array, keys) {
 
 		keys = keys || {};
 
@@ -1193,17 +1168,19 @@ return /******/ (function(modules) { // webpackBootstrap
 		var keySort = function keySort(a, b, d) {
 			d = d !== null ? d : 1;
 
-			if (stickySort) {
-				var sortDirection = d === -1;
-				var stickyValues = StickySortValues(a, b, sortDirection);
-				a = stickyValues.a;
-				b = stickyValues.b;
-			}
+			a = hasValue(a) ? a : null;
+			b = hasValue(b) ? b : null;
 
 			// force any string values to lowercase
 			a = typeof a === 'string' ? a.toLowerCase() : a;
 			b = typeof b === 'string' ? b.toLowerCase() : b;
 
+			if (a === null) {
+				return 1;
+			}
+			if (b === null) {
+				return -1;
+			}
 			// Return either 1 or -1  *d to indicate a sort priority. d is sort direction
 			if (a > b) {
 				return 1 * d;
