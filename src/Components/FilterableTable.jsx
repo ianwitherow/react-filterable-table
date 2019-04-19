@@ -35,6 +35,21 @@ class FilterableTable extends React.Component {
 		this.scrollIntoView = this.scrollIntoView.bind(this);
 		this.removeExactFilter = this.removeExactFilter.bind(this);
 
+		this.keydownEventListener = (e) => {
+			if (e.which === 16) { // Shift
+				if (!this.state.shiftDown) {
+					this.setState({ shiftDown: true });
+				}
+			}
+		}
+		this.keyupEventListener = (e) => {
+			if (e.which === 16) { // Shift
+				if (this.state.shiftDown) {
+					this.setState({ shiftDown: false });
+				}
+			}
+		}
+
 		axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 	}
 
@@ -51,21 +66,13 @@ class FilterableTable extends React.Component {
 	componentDidMount() {
 		this.loadData();
 		// Keep track of shift key
-		window.addEventListener("keydown", (e) => {
-			if (e.which === 16) { // Shift
-				if (!this.state.shiftDown) {
-					this.setState({ shiftDown: true });
-				}
-			}
-		});
-		window.addEventListener("keyup", (e) => {
-			if (e.which === 16) { // Shift
-				if (this.state.shiftDown) {
-					this.setState({ shiftDown: false });
-				}
-			}
-		});
+		window.addEventListener("keydown", this.keydownEventListener, false);
+		window.addEventListener("keyup", this.keyupEventListener, false);
+	}
 
+	componentWillUnmount() {
+		window.removeEventListener("keydown", this.keydownEventListener, false);
+		window.removeEventListener("keyup", this.keyupEventListener, false);
 	}
 
 	componentWillReceiveProps(nextProps) {
