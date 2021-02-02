@@ -1,3 +1,6 @@
+## Note
+I'm no longer actively working on this, but please feel free to fork it.
+
 # react-filterable-table
 Extendable table with filtering, sorting, paging, and more. Hold down shift to sort on multiple fields.
 
