@@ -1,14 +1,16 @@
-const hasValue = require('./hasValue');
-const getValue = require('./getValue');
+import hasValue from './hasValue';
+import getValue from './getValue';
 
 function FilterAndSort(array, options) {
 	array = array || [];
 	const {
 		filter,
 		exactFilters,
+		fieldFilters,
 		sortFields,
 		fields
 	} = options;
+	if (!fields || !fields.length) return [];
 
 	const filterableFields = fields.filter(field => {
 		return field.inputFilterable;
@@ -39,6 +41,27 @@ function FilterAndSort(array, options) {
 					let compareValue = hasValue(recordValue) ? recordValue.toString().toLowerCase() : '';
 					let exactFilterValue = exactFilter.value.toString().toLowerCase();
 					return compareValue === exactFilterValue;
+				}
+			});
+		});
+	}
+
+	// Check field filters
+	if (fieldFilters.length > 0) {
+		records = records.filter(record => {
+			return fieldFilters.every(fieldFilter => {
+				let exact = fieldFilter.exact || fields.find(f => f.name === fieldFilter.fieldname).fieldFilterExact || false;
+
+				let recordValue = getValue(record, fieldFilter.fieldname);
+				if (Array.isArray(recordValue)) {
+					// The field we're filtering on is an array. See if the array has our filter value in it.
+					return hasValue(recordValue) && recordValue.some(val => val && exact ? val.toLowerCase() === fieldFilter.value.toLowerCase() : val.toLowerCase().includes(fieldFilter.value))
+				} else {
+					// See if the value is contained in the record
+					// Compare against trimmed lowercase strings
+					const thisRecordValue = hasValue(recordValue) ? recordValue.toString().toLowerCase().trim() : "";
+					const thisFilterValue = hasValue(fieldFilter.value) ? fieldFilter.value.toString().toLowerCase().trim() : "";
+					return hasValue(thisRecordValue) && (exact ? thisRecordValue === thisFilterValue : thisRecordValue.includes(thisFilterValue));
 				}
 			});
 		});

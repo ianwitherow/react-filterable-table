@@ -1,5 +1,5 @@
 import React from 'react';
-let ExactFilter = require('./ExactFilter');
+const ExactFilter = require('./ExactFilter');
 
 class ExactFilters extends React.Component {
 	constructor(props) {

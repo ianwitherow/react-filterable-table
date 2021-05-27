@@ -45,21 +45,49 @@ class Table extends React.Component {
 			return field.visible !== false;
 		});
 
-		const headerCells = fields.map((field, i) => {
-			// Use the displayName property if supplied, otherwise use name
-			let fieldDisplayName = field.displayName !== undefined ? field.displayName : field.name;
-			const renderProps = { field, ...this.props };
-			if (typeof(field.thRender) === "function") {
-				fieldDisplayName = field.thRender(renderProps);
-			}
+		const headerRow = <tr>{
+			fields.map((field, i) => {
+				// Use the displayName property if supplied, otherwise use name
+				let fieldDisplayName = field.displayName !== undefined ? field.displayName : field.name;
+				const renderProps = { field, ...this.props };
+				if (typeof(field.thRender) === "function") {
+					fieldDisplayName = field.thRender(renderProps);
+				}
 
-			return (
-				<th onClick={field.sortable ? () => updateSort(field.sortFieldName || field.name) : null} className={field.thClassName ? field.thClassName : null} key={i} title={field.title || null}>
-					<span className={field.sortable ? "sortable" : null}>{fieldDisplayName}</span>
-					{this.headerSortElement(field)}
+				return (
+					<th onClick={field.sortable ? () => updateSort(field.sortFieldName || field.name) : null} className={field.thClassName ? field.thClassName : null} key={i} title={field.title || null}>
+						<span className={field.sortable ? "sortable" : null}>{fieldDisplayName}</span>
+						{this.headerSortElement(field)}
+					</th>
+				);
+			})
+		}</tr>;
+
+		// Add filter textboxes above the table headers if the `showHeaderFilters` prop was set
+		const headerFilterRow = this.props.showHeaderFilters && <tr>
+			{fields.map((field, i) => {
+				const fieldFilter = this.props.fieldFilters.find(f => f.fieldname === field.name);
+				return <th key={`fieldFilter_${i}`} className="headerFilter">
+					{field.inputFilterable &&
+						<span className="filter-container">
+							<input
+								className={`form-control form-control-sm filter-input ${fieldFilter && fieldFilter.value.length ? "has-value" : ""}`}
+								placeholder="Filter"
+								value={fieldFilter ? fieldFilter.value : ""}
+								onChange={(e) => this.props.updateFieldFilter({ fieldname: field.name, value: e.target.value, exact: (field.fieldFilterExact || false) })}
+							/>
+								<span className="close clear-filter" onClick={(e) => {
+									this.props.updateFieldFilter({ fieldname: field.name, value: "" });
+									// Focus the text box
+									e.target.parentElement.firstElementChild.focus();
+								}}>&times;</span>
+						</span>
+					}
 				</th>
-			);
-		});
+			}
+			)}
+		</tr>;
+
 
 		const rows = records.map((record, i) => {
 			let trClassName = this.props.trClassName || null;
@@ -80,6 +108,7 @@ class Table extends React.Component {
 				const renderProps = {
 					value: recordBody,
 					record,
+					recordIndex: i,
 					records: this.props.allRecords,
 					filteredRecords: records,
 					field,
@@ -164,15 +193,14 @@ class Table extends React.Component {
 		}
 
 		return (
-			rows.length === 0 ? 
+			rows.length === 0 && this.props.fieldFilters.length === 0 ? 
 				(<div>{this.props.noFilteredRecordsMessage || 'There are no records to display.'}</div>)
 			:
 			<div>
 				<table className={tableClassName} style={this.props.style} ref="table">
 					<thead>
-						<tr>
-							{headerCells}
-						</tr>
+						{headerFilterRow}
+						{headerRow}
 					</thead>
 					<tbody>
 						{rows}

@@ -3,7 +3,6 @@ import Table from './Table';
 import Header from './Header';
 import Pager from 'react-pager';
 import FilterAndSort from '../Helpers/FilterAndSort';
-import axios from 'axios';
 import isElementInViewport from '../Helpers/isElementInViewport';
 
 class FilterableTable extends React.Component {
@@ -16,6 +15,7 @@ class FilterableTable extends React.Component {
 			sortFields: [ { name: this.props.initialSort, reverse: (typeof this.props.initialSortDir === "boolean") ? !this.props.initialSortDir : false }],
 			filter: '',
 			exactFilters: [],
+			fieldFilters: this.props.initialFieldFilters || [],
 			serverError: false,
 			totalPages: 1,
 			visiblePages: 5,
@@ -28,6 +28,7 @@ class FilterableTable extends React.Component {
 		this.setData = this.setData.bind(this);
 		this.updateFilter = this.updateFilter.bind(this);
 		this.addExactFilter = this.addExactFilter.bind(this);
+		this.updateFieldFilter = this.updateFieldFilter.bind(this);
 		this.updatePageSize = this.updatePageSize.bind(this);
 		this.updatePage = this.updatePage.bind(this);
 		this.filterInputChanged = this.filterInputChanged.bind(this);
@@ -50,7 +51,6 @@ class FilterableTable extends React.Component {
 			}
 		}
 
-		axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 	}
 
 	static get defaultProps() {
@@ -118,18 +118,24 @@ class FilterableTable extends React.Component {
 			this.setData(this.props.data);
 		} else {
 			// Load data from endpoint
-			axios.get(this.props.dataEndpoint)
-			.then(response => response.data)
-			.then(entries => {
-				this.setData(entries);
-			})
-			.catch(error => {
-				this.setState({
-					serverError: true,
-					loading: false
+			fetch(this.props.dataEndpoint)
+				.then(r => {
+					if (r.status !== 200) {
+						throw r;
+					}
+					return r;
+				})
+				.then(r => r.json())
+				.then(entries => {
+					this.setData(entries);
+				})
+				.catch(error => {
+					this.setState({
+						serverError: true,
+						loading: false
+					});
+					console.log(error);
 				});
-				console.log(error);
-			});
 		}
 
 	}
@@ -193,6 +199,29 @@ class FilterableTable extends React.Component {
 		// Call callback if supplied
 		if (this.props.onFilterAdded) {
 			this.props.onFilterAdded(thisFilter);
+		}
+	}
+
+	// Adds/updates a field filter
+	// fieldFilter: object { fieldname, value, exact }
+	updateFieldFilter(fieldFilter) {
+		let fieldFilters = this.state.fieldFilters.slice();
+		let existingFilterIndex = fieldFilters.findIndex(f => f.fieldname === fieldFilter.fieldname);
+		if (existingFilterIndex > -1) {
+			// Remove the filter if it exists
+			if (fieldFilter.value.length === 0) {
+				fieldFilters.splice(existingFilterIndex, 1);
+			} else {
+				fieldFilters[existingFilterIndex] = fieldFilter;
+			}
+		} else {
+			// Doesn't exist yet, add it
+			fieldFilters.push(fieldFilter);
+		}
+		this.setState({ fieldFilters, page: 0 });
+		// Call callback if supplied
+		if (this.props.onFilterAdded) {
+			this.props.onFilterAdded(fieldFilter);
 		}
 	}
 
@@ -303,6 +332,7 @@ class FilterableTable extends React.Component {
 		let filteredEntries = FilterAndSort(this.state.entries, {
 			filter: this.state.filter,
 			exactFilters: this.state.exactFilters,
+			fieldFilters: this.state.fieldFilters,
 			sortFields: this.state.sortFields,
 			fields: fields
 		});
@@ -316,6 +346,8 @@ class FilterableTable extends React.Component {
 				fields={fields}
 				filterExact={this.state.filterExact}
 				addExactFilter={this.addExactFilter}
+				updateFieldFilter={this.updateFieldFilter}
+				fieldFilters={this.state.fieldFilters}
 				updateSort={this.updateSort}
 				sortFields={this.state.sortFields}
 				iconSort={this.props.iconSort}
@@ -328,6 +360,7 @@ class FilterableTable extends React.Component {
 				className={this.props.tableClassName}
 				trClassName={this.props.trClassName}
 				style={this.props.style}
+				showHeaderFilters={this.props.showHeaderFilters}
 				ref="Table"
 			/>
 
