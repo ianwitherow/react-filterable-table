@@ -138,6 +138,7 @@ const fields = [
 
 The render function gets a few other props as well which may be useful. For example:
 * `records` - Your data array
+* `recordIndex` - This record's index
 * `filteredRecords` - The current array of records that the table is showing (if there are any filters applied, this will be the filtered items)
 * `addExactFilter` - function to add an exact filter on something. Use it in an onClick to filter on whatever you want.
 	* Usage: `addExactFilter(value, fieldname, name = fieldname)`
