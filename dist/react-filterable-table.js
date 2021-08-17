@@ -180,20 +180,20 @@ return /******/ (function(modules) { // webpackBootstrap
 				window.removeEventListener("keyup", this.keyupEventListener, false);
 			}
 		}, {
-			key: 'componentWillReceiveProps',
-			value: function componentWillReceiveProps(nextProps) {
+			key: 'componentDidUpdate',
+			value: function componentDidUpdate(prevProps) {
 				// If the `data` prop changes, make sure we run our onDataReceived callback (if supplied)
 				// and set our states
-				if (nextProps.hasOwnProperty('data') && nextProps.data !== this.props.data) {
-					this.setData(nextProps.data);
+				if (this.props.hasOwnProperty('data') && prevProps.data !== this.props.data) {
+					this.setData(this.props.data);
 				}
 
-				if (nextProps.hasOwnProperty('sortFields') && nextProps.sortFields !== this.props.sortFields) {
-					this.setState({ sort: nextProps.sortFields });
+				if (this.props.hasOwnProperty('sortFields') && prevProps.sortFields !== this.props.sortFields) {
+					this.setState({ sort: this.props.sortFields });
 				}
 
-				if (nextProps.hasOwnProperty('loading') && nextProps.loading !== this.props.loading) {
-					this.setState({ loading: nextProps.loading });
+				if (this.props.hasOwnProperty('loading') && prevProps.loading !== this.props.loading) {
+					this.setState({ loading: this.props.loading });
 				}
 			}
 		}, {
@@ -545,7 +545,6 @@ return /******/ (function(modules) { // webpackBootstrap
 				// Set defaults if values weren't passed in
 				return {
 					noRecordsMessage: "There are no records to display",
-					noFilteredRecordsMessage: "There are no records to display",
 					tableClassName: "table table-condensed table-hover filterable-table",
 					pageSizes: [10, 20, 30, 50]
 				};
