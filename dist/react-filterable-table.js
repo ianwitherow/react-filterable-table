@@ -484,6 +484,7 @@ return /******/ (function(modules) { // webpackBootstrap
 					trClassName: this.props.trClassName,
 					style: this.props.style,
 					showHeaderFilters: this.props.showHeaderFilters,
+					onRowClicked: this.props.onRowClicked,
 					ref: 'Table'
 				});
 
@@ -524,6 +525,7 @@ return /******/ (function(modules) { // webpackBootstrap
 						upperHeaderChildren: this.props.upperHeaderChildren,
 						lowerHeaderChildren: this.props.lowerHeaderChildren,
 						visible: this.props.headerVisible,
+						filterInputVisible: this.props.filterInputVisible,
 						pagersVisible: this.props.pagersVisible,
 						pageSizes: this.props.pageSizes,
 						autofocusFilter: this.props.autofocusFilter
@@ -625,7 +627,8 @@ return /******/ (function(modules) { // webpackBootstrap
 				    updateSort = _props.updateSort,
 				    page = _props.page,
 				    pageSize = _props.pageSize,
-				    visible = _props.visible;
+				    visible = _props.visible,
+				    onRowClicked = _props.onRowClicked;
 
 				// Paging - determine indexes for where to slice the array
 
@@ -772,9 +775,12 @@ return /******/ (function(modules) { // webpackBootstrap
 						);
 					});
 
+					var rowClicked = onRowClicked ? function () {
+						return onRowClicked({ record: record, index: i });
+					} : null;
 					return _react2.default.createElement(
 						'tr',
-						{ key: i, className: trClassName },
+						{ key: i, className: trClassName, onClick: rowClicked },
 						tableTds
 					);
 				});
@@ -942,7 +948,20 @@ return /******/ (function(modules) { // webpackBootstrap
 					recordCount === 1 ? this.props.recordCountName : this.props.recordCountNamePlural
 				);
 
-				var perPageSelect = this.props.pagersVisible !== false && this.props.pageSizes && this.props.pageSizes.length > 0 ? _react2.default.createElement(
+				var filterInput = this.props.filterInputVisible !== false && _react2.default.createElement(
+					'span',
+					{ className: 'filter-container' },
+					_react2.default.createElement('input', { type: 'text', className: 'form-control filter-input', value: filter, onChange: this.filterChanged, ref: 'filter', placeholder: 'Filter', autoFocus: this.props.autofocusFilter }),
+					_react2.default.createElement(
+						'span',
+						{ className: 'close clear-filter', onClick: function onClick() {
+								return _this2.filterChanged('');
+							} },
+						'\xD7'
+					)
+				);
+
+				var perPageSelect = this.props.pagersVisible !== false && this.props.pageSizes && this.props.pageSizes.length > 0 && _react2.default.createElement(
 					'select',
 					{ className: 'form-control pull-sm-right pull-md-right pull-lg-right', onChange: updatePageSize, value: this.props.pageSize },
 					this.props.pageSizes.map(function (p, i) {
@@ -953,7 +972,7 @@ return /******/ (function(modules) { // webpackBootstrap
 							' per page'
 						);
 					})
-				) : null;
+				);
 
 				return _react2.default.createElement(
 					'div',
@@ -966,18 +985,7 @@ return /******/ (function(modules) { // webpackBootstrap
 						_react2.default.createElement(
 							'div',
 							{ className: 'col-sm-3 filter-container' },
-							_react2.default.createElement(
-								'span',
-								{ className: 'filter-container' },
-								_react2.default.createElement('input', { type: 'text', className: 'form-control filter-input', value: filter, onChange: this.filterChanged, ref: 'filter', placeholder: 'Filter', autoFocus: this.props.autofocusFilter }),
-								_react2.default.createElement(
-									'span',
-									{ className: 'close clear-filter', onClick: function onClick() {
-											return _this2.filterChanged('');
-										} },
-									'\xD7'
-								)
-							)
+							filterInput
 						),
 						_react2.default.createElement(
 							'div',

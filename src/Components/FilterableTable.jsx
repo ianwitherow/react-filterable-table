@@ -359,6 +359,7 @@ class FilterableTable extends React.Component {
 				trClassName={this.props.trClassName}
 				style={this.props.style}
 				showHeaderFilters={this.props.showHeaderFilters}
+				onRowClicked={this.props.onRowClicked}
 				ref="Table"
 			/>
 
@@ -404,6 +405,7 @@ class FilterableTable extends React.Component {
 					upperHeaderChildren={this.props.upperHeaderChildren}
 					lowerHeaderChildren={this.props.lowerHeaderChildren}
 					visible={this.props.headerVisible}
+					filterInputVisible={this.props.filterInputVisible}
 					pagersVisible={this.props.pagersVisible}
 					pageSizes={this.props.pageSizes}
 					autofocusFilter={this.props.autofocusFilter}

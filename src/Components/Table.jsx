@@ -26,7 +26,8 @@ class Table extends React.Component {
 			updateSort,
 			page,
 			pageSize,
-			visible
+			visible,
+			onRowClicked
 		} = this.props;
 
 		// Paging - determine indexes for where to slice the array
@@ -154,8 +155,9 @@ class Table extends React.Component {
 				);
 			});
 
+			const rowClicked = onRowClicked ? () => onRowClicked({ record, index: i }) : null;
 			return (
-				<tr key={i} className={trClassName}>
+				<tr key={i} className={trClassName} onClick={rowClicked}>
 					{tableTds}
 				</tr>
 			);

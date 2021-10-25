@@ -39,13 +39,21 @@ class Header extends React.Component {
 			</span>
 		);
 
-		let perPageSelect = this.props.pagersVisible !== false && this.props.pageSizes && this.props.pageSizes.length > 0
-			?  <select className="form-control pull-sm-right pull-md-right pull-lg-right" onChange={updatePageSize} value={this.props.pageSize}>
+
+		const filterInput = this.props.filterInputVisible !== false
+			&& <span className="filter-container">
+					<input type="text" className="form-control filter-input" value={filter} onChange={this.filterChanged} ref="filter" placeholder="Filter" autoFocus={this.props.autofocusFilter} />
+					<span className="close clear-filter" onClick={() => this.filterChanged('')}>
+						&times;
+					</span>
+				</span>;
+
+		const perPageSelect = this.props.pagersVisible !== false && this.props.pageSizes && this.props.pageSizes.length > 0
+			&& <select className="form-control pull-sm-right pull-md-right pull-lg-right" onChange={updatePageSize} value={this.props.pageSize}>
 					{this.props.pageSizes.map((p, i) =>
 						<option value={p} key={i}>{p} per page</option>
 					)}
-				</select>
-			: null;
+				</select>;
 
 		return (
 			<div>
@@ -53,12 +61,7 @@ class Header extends React.Component {
 				{this.props.upperHeaderChildren}
 				<div className="row header-row">
 					<div className="col-sm-3 filter-container">
-						<span className="filter-container">
-							<input type="text" className="form-control filter-input" value={filter} onChange={this.filterChanged} ref="filter" placeholder="Filter" autoFocus={this.props.autofocusFilter} />
-							<span className="close clear-filter" onClick={() => this.filterChanged('')}>
-								&times;
-							</span>
-						</span>
+						{filterInput}
 					</div>
 					<div className="col-sm-5 col-sm-push-4">
 						{perPageSelect}
