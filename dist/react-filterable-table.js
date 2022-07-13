@@ -123,7 +123,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				entries: _this.props.data || [],
 				sortFields: [{ name: _this.props.initialSort, reverse: typeof _this.props.initialSortDir === "boolean" ? !_this.props.initialSortDir : false }],
 				filter: '',
-				exactFilters: [],
+				exactFilters: _this.props.initialExactFilters || [],
 				fieldFilters: _this.props.initialFieldFilters || [],
 				serverError: false,
 				totalPages: 1,
@@ -274,9 +274,15 @@ return /******/ (function(modules) { // webpackBootstrap
 			}
 		}, {
 			key: 'addExactFilter',
-			value: function addExactFilter(value, fieldname) {
-				var name = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : fieldname;
-
+			value: function addExactFilter(value, fieldname, name) {
+				console.log('name:', name);
+				console.log('fieldname:', fieldname);
+				if (!name) {
+					console.log("No name");
+					name = fieldname;
+					console.log("Use fieldname");
+					console.log("name:", name);
+				}
 				// Exact filters are an array; grab the existing ones and push this one on it.
 				// Don't add it if value is null/undefined
 				if (value === undefined || value === null || value.toString().length === 0) {

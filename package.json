@@ -1,6 +1,6 @@
 {
   "name": "react-filterable-table",
-  "version": "0.3.438",
+  "version": "0.3.439",
   "description": "Extendable table with filtering, sorting, paging, and more",
   "main": "dist/react-filterable-table.js",
   "scripts": {
@@ -43,6 +43,9 @@
     "less-loader": "^2.2.3",
     "webpack": "^1.13.0"
   },
+	"resolutions": {
+		"graceful-fs": "^4.2.9"
+	},
   "homepage": "https://github.com/ianwitherow/react-filterable-table",
   "author": "Ian Witherow",
   "license": "MIT"

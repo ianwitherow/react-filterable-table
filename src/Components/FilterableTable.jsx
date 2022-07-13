@@ -14,7 +14,7 @@ class FilterableTable extends React.Component {
 			entries: this.props.data || [],
 			sortFields: [ { name: this.props.initialSort, reverse: (typeof this.props.initialSortDir === "boolean") ? !this.props.initialSortDir : false }],
 			filter: '',
-			exactFilters: [],
+			exactFilters: this.props.initialExactFilters || [],
 			fieldFilters: this.props.initialFieldFilters || [],
 			serverError: false,
 			totalPages: 1,
