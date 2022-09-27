@@ -35,7 +35,7 @@ class Header extends React.Component {
 		// text can be overridden using the recordCountName and recordCountNamePlural props.
 		const recordCountMessage = (
 			<span>
-				{recordCount} {recordCount === 1 ? this.props.recordCountName : this.props.recordCountNamePlural}
+				{recordCount.toLocaleString()} {recordCount === 1 ? this.props.recordCountName : this.props.recordCountNamePlural}
 			</span>
 		);
 
