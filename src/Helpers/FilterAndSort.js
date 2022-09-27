@@ -73,7 +73,7 @@ function FilterAndSort(array, options) {
 		sortFields.forEach(field => {
 			sortKeys[field.name] = (field.reverse) ? "desc" : "asc";
 		});
-		return MultiSort(records, sortKeys);
+		records = MultiSort([...records], sortKeys);
 	}
 	return records;
 }
