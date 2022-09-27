@@ -274,15 +274,9 @@ return /******/ (function(modules) { // webpackBootstrap
 			}
 		}, {
 			key: 'addExactFilter',
-			value: function addExactFilter(value, fieldname, name) {
-				console.log('name:', name);
-				console.log('fieldname:', fieldname);
-				if (!name) {
-					console.log("No name");
-					name = fieldname;
-					console.log("Use fieldname");
-					console.log("name:", name);
-				}
+			value: function addExactFilter(value, fieldname) {
+				var name = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : fieldname;
+
 				// Exact filters are an array; grab the existing ones and push this one on it.
 				// Don't add it if value is null/undefined
 				if (value === undefined || value === null || value.toString().length === 0) {
@@ -949,7 +943,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				var recordCountMessage = _react2.default.createElement(
 					'span',
 					null,
-					recordCount,
+					recordCount.toLocaleString(),
 					' ',
 					recordCount === 1 ? this.props.recordCountName : this.props.recordCountNamePlural
 				);
@@ -1184,6 +1178,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 	function FilterAndSort(array, options) {
 		array = array || [];
 		var filter = options.filter,
@@ -1256,7 +1252,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			sortFields.forEach(function (field) {
 				sortKeys[field.name] = field.reverse ? "desc" : "asc";
 			});
-			return MultiSort(records, sortKeys);
+			records = MultiSort([].concat(_toConsumableArray(records)), sortKeys);
 		}
 		return records;
 	}
