@@ -7,7 +7,7 @@ class Table extends React.Component {
 	headerSortElement(field) {
 		// Return the prop element for the sort icon (if provided)
 		if (field.sortable) {
-			let sortField = this.props.sortFields.find(sf => sf.name === field.name || sf.name === field.sortFieldName);
+			let sortField = this.props.sortFields.find(sf => sf.name === field.name || (sf.name === field.sortFieldName && field.sortFieldName != null));
 			if (sortField) {
 				if (!sortField.reverse) {
 					return this.props.iconSortedAsc || <span className="fa fa-sort-asc" />;

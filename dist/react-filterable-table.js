@@ -601,10 +601,13 @@ return /******/ (function(modules) { // webpackBootstrap
 		_createClass(Table, [{
 			key: 'headerSortElement',
 			value: function headerSortElement(field) {
+				console.log("props:", this.props);
+				console.log("sortFields:", this.props.sortFields);
+				console.log("field:", field);
 				// Return the prop element for the sort icon (if provided)
 				if (field.sortable) {
 					var sortField = this.props.sortFields.find(function (sf) {
-						return sf.name === field.name || sf.name === field.sortFieldName;
+						return sf.name === field.name || sf.name === field.sortFieldName && field.sortFieldName != null;
 					});
 					if (sortField) {
 						if (!sortField.reverse) {
