@@ -5,6 +5,8 @@ class Header extends React.Component {
 	constructor(props) {
 		super(props)
 		this.filterChanged = this.filterChanged.bind(this);
+
+		this.filterRef = React.createRef();
 	}
 
 	static get defaultProps() {
@@ -20,7 +22,7 @@ class Header extends React.Component {
 		let newValue = event ? event.target.value : '';
 		if (newValue.length === 0) {
 			// When clearing filter, set focus in the text box
-			this.refs.filter.focus();
+			this.filterRef.current.focus();
 		}
 		this.props.updateFilter(newValue);
 	}
@@ -42,7 +44,7 @@ class Header extends React.Component {
 
 		const filterInput = this.props.filterInputVisible !== false
 			&& <span className="filter-container">
-					<input type="text" className="form-control filter-input" value={filter} onChange={this.filterChanged} ref="filter" placeholder="Filter" autoFocus={this.props.autofocusFilter} />
+					<input type="text" className="form-control filter-input" value={filter} onChange={this.filterChanged} ref={this.filterRef} placeholder="Filter" autoFocus={this.props.autofocusFilter} />
 					<span className="close clear-filter" onClick={() => this.filterChanged('')}>
 						&times;
 					</span>

@@ -194,12 +194,14 @@ class Table extends React.Component {
 			tableClassName += " filterable-table";
 		}
 
+		const tableProps = this.props.tableProps ? this.props.tableProps : {};
+
 		return (
 			rows.length === 0 && this.props.fieldFilters.length === 0 ? 
 				(<div>{this.props.noFilteredRecordsMessage || 'There are no records to display.'}</div>)
 			:
 			<div>
-				<table className={tableClassName} style={this.props.style} ref="table">
+				<table className={tableClassName} style={this.props.style} {...tableProps}>
 					<thead>
 						{headerFilterRow}
 						{headerRow}

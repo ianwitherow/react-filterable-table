@@ -24,6 +24,8 @@ class FilterableTable extends React.Component {
 			shiftDown: false
 		}
 
+		this.tableRef = React.createRef();
+
 		this.loadData = this.loadData.bind(this);
 		this.setData = this.setData.bind(this);
 		this.updateFilter = this.updateFilter.bind(this);
@@ -289,8 +291,8 @@ class FilterableTable extends React.Component {
 
 	scrollIntoView() {
 		// Make sure things are in view
-		if (this.refs.Table) {
-			let table = this.refs.Table.refs.table;
+		if (this.tableRef && this.tableRef.current) {
+			let table = this.tableRef.current.table;
 			if (table && !isElementInViewport(table)) {
 				table.scrollIntoView();
 			}
@@ -336,7 +338,6 @@ class FilterableTable extends React.Component {
 		});
 
 
-
 		let table = !this.state.loading && this.state.entries.length > 0 &&
 			<Table
 				records={filteredEntries}
@@ -356,11 +357,12 @@ class FilterableTable extends React.Component {
 				pagersVisible={this.props.pagersVisible}
 				noFilteredRecordsMessage={this.props.noFilteredRecordsMessage}
 				className={this.props.tableClassName}
+				tableProps={this.props.tableProps}
 				trClassName={this.props.trClassName}
 				style={this.props.style}
 				showHeaderFilters={this.props.showHeaderFilters}
 				onRowClicked={this.props.onRowClicked}
-				ref="Table"
+				ref={this.tableRef}
 			/>
 
 

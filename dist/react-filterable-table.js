@@ -133,6 +133,8 @@ return /******/ (function(modules) { // webpackBootstrap
 				shiftDown: false
 			};
 
+			_this.tableRef = _react2.default.createRef();
+
 			_this.loadData = _this.loadData.bind(_this);
 			_this.setData = _this.setData.bind(_this);
 			_this.updateFilter = _this.updateFilter.bind(_this);
@@ -418,8 +420,8 @@ return /******/ (function(modules) { // webpackBootstrap
 			key: 'scrollIntoView',
 			value: function scrollIntoView() {
 				// Make sure things are in view
-				if (this.refs.Table) {
-					var table = this.refs.Table.refs.table;
+				if (this.tableRef && this.tableRef.current) {
+					var table = this.tableRef.current.table;
 					if (table && !(0, _isElementInViewport2.default)(table)) {
 						table.scrollIntoView();
 					}
@@ -481,11 +483,12 @@ return /******/ (function(modules) { // webpackBootstrap
 					pagersVisible: this.props.pagersVisible,
 					noFilteredRecordsMessage: this.props.noFilteredRecordsMessage,
 					className: this.props.tableClassName,
+					tableProps: this.props.tableProps,
 					trClassName: this.props.trClassName,
 					style: this.props.style,
 					showHeaderFilters: this.props.showHeaderFilters,
 					onRowClicked: this.props.onRowClicked,
-					ref: 'Table'
+					ref: this.tableRef
 				});
 
 				var totalPages = filteredEntries && filteredEntries.length > 0 ? Math.ceil(filteredEntries.length / this.state.pageSize) : 0;
@@ -601,9 +604,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		_createClass(Table, [{
 			key: 'headerSortElement',
 			value: function headerSortElement(field) {
-				console.log("props:", this.props);
-				console.log("sortFields:", this.props.sortFields);
-				console.log("field:", field);
 				// Return the prop element for the sort icon (if provided)
 				if (field.sortable) {
 					var sortField = this.props.sortFields.find(function (sf) {
@@ -818,6 +818,8 @@ return /******/ (function(modules) { // webpackBootstrap
 					tableClassName += " filterable-table";
 				}
 
+				var tableProps = this.props.tableProps ? this.props.tableProps : {};
+
 				return rows.length === 0 && this.props.fieldFilters.length === 0 ? _react2.default.createElement(
 					'div',
 					null,
@@ -827,7 +829,7 @@ return /******/ (function(modules) { // webpackBootstrap
 					null,
 					_react2.default.createElement(
 						'table',
-						{ className: tableClassName, style: this.props.style, ref: 'table' },
+						_extends({ className: tableClassName, style: this.props.style }, tableProps),
 						_react2.default.createElement(
 							'thead',
 							null,
@@ -911,6 +913,8 @@ return /******/ (function(modules) { // webpackBootstrap
 			var _this = _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).call(this, props));
 
 			_this.filterChanged = _this.filterChanged.bind(_this);
+
+			_this.filterRef = _react2.default.createRef();
 			return _this;
 		}
 
@@ -920,7 +924,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				var newValue = event ? event.target.value : '';
 				if (newValue.length === 0) {
 					// When clearing filter, set focus in the text box
-					this.refs.filter.focus();
+					this.filterRef.current.focus();
 				}
 				this.props.updateFilter(newValue);
 			}
@@ -954,7 +958,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				var filterInput = this.props.filterInputVisible !== false && _react2.default.createElement(
 					'span',
 					{ className: 'filter-container' },
-					_react2.default.createElement('input', { type: 'text', className: 'form-control filter-input', value: filter, onChange: this.filterChanged, ref: 'filter', placeholder: 'Filter', autoFocus: this.props.autofocusFilter }),
+					_react2.default.createElement('input', { type: 'text', className: 'form-control filter-input', value: filter, onChange: this.filterChanged, ref: this.filterRef, placeholder: 'Filter', autoFocus: this.props.autofocusFilter }),
 					_react2.default.createElement(
 						'span',
 						{ className: 'close clear-filter', onClick: function onClick() {
