@@ -55,8 +55,13 @@ class Table extends React.Component {
 					fieldDisplayName = field.thRender(renderProps);
 				}
 
+				let thProps = field.thProps || {};
+				if (typeof(thProps) === "function") {
+					thProps = thProps(renderProps);
+				}
+
 				return (
-					<th onClick={field.sortable ? () => updateSort(field.sortFieldName || field.name) : null} className={field.thClassName ? field.thClassName : null} key={i} title={field.title || null}>
+					<th className={field.thClassName ? field.thClassName : null} key={i} title={field.title || null} onClick={field.sortable ? () => updateSort(field.sortFieldName || field.name) : null} {...thProps}>
 						<span className={field.sortable ? "sortable" : null}>{fieldDisplayName}</span>
 						{this.headerSortElement(field)}
 					</th>
@@ -92,6 +97,12 @@ class Table extends React.Component {
 
 		const rows = records.map((record, i) => {
 			let trClassName = this.props.trClassName || null;
+			let trProps = this.props.trProps || {};
+
+			if (typeof(trProps) === "function") {
+				trProps = trProps(record, i);
+			}
+
 			if (typeof(this.props.trClassName) === "function") {
 				trClassName = this.props.trClassName(record, i);
 			}
@@ -148,8 +159,16 @@ class Table extends React.Component {
 						</span>
 					: null;
 
+				let tdProps = {};
+				if (field.tdProps != null) {
+					tdProps = field.tdProps;
+					if (typeof(tdProps) === "function") {
+						tdProps = tdProps(renderProps);
+					}
+				}
+
 				return (
-					<td className={tdClassName} key={q}>
+					<td className={tdClassName} {...tdProps} key={q}>
 						{tdContent}
 					</td>
 				);
@@ -157,7 +176,7 @@ class Table extends React.Component {
 
 			const rowClicked = onRowClicked ? () => onRowClicked({ record, index: i }) : null;
 			return (
-				<tr key={i} className={trClassName} onClick={rowClicked}>
+				<tr key={i} className={trClassName} {...trProps} onClick={rowClicked} >
 					{tableTds}
 				</tr>
 			);

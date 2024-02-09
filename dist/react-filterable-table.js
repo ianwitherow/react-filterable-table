@@ -485,6 +485,7 @@ return /******/ (function(modules) { // webpackBootstrap
 					className: this.props.tableClassName,
 					tableProps: this.props.tableProps,
 					trClassName: this.props.trClassName,
+					trProps: this.props.trProps,
 					style: this.props.style,
 					showHeaderFilters: this.props.showHeaderFilters,
 					onRowClicked: this.props.onRowClicked,
@@ -661,11 +662,16 @@ return /******/ (function(modules) { // webpackBootstrap
 							fieldDisplayName = field.thRender(renderProps);
 						}
 
+						var thProps = field.thProps || {};
+						if (typeof thProps === "function") {
+							thProps = thProps(renderProps);
+						}
+
 						return _react2.default.createElement(
 							'th',
-							{ onClick: field.sortable ? function () {
+							_extends({ className: field.thClassName ? field.thClassName : null, key: i, title: field.title || null, onClick: field.sortable ? function () {
 									return updateSort(field.sortFieldName || field.name);
-								} : null, className: field.thClassName ? field.thClassName : null, key: i, title: field.title || null },
+								} : null }, thProps),
 							_react2.default.createElement(
 								'span',
 								{ className: field.sortable ? "sortable" : null },
@@ -714,6 +720,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 				var rows = records.map(function (record, i) {
 					var trClassName = _this2.props.trClassName || null;
+					var trProps = _this2.props.trProps || {};
+
+					if (typeof trProps === "function") {
+						trProps = trProps(record, i);
+					}
+
 					if (typeof _this2.props.trClassName === "function") {
 						trClassName = _this2.props.trClassName(record, i);
 					}
@@ -771,9 +783,17 @@ return /******/ (function(modules) { // webpackBootstrap
 							recordBody
 						) : null;
 
+						var tdProps = {};
+						if (field.tdProps != null) {
+							tdProps = field.tdProps;
+							if (typeof tdProps === "function") {
+								tdProps = tdProps(renderProps);
+							}
+						}
+
 						return _react2.default.createElement(
 							'td',
-							{ className: tdClassName, key: q },
+							_extends({ className: tdClassName }, tdProps, { key: q }),
 							tdContent
 						);
 					});
@@ -783,7 +803,7 @@ return /******/ (function(modules) { // webpackBootstrap
 					} : null;
 					return _react2.default.createElement(
 						'tr',
-						{ key: i, className: trClassName, onClick: rowClicked },
+						_extends({ key: i, className: trClassName }, trProps, { onClick: rowClicked }),
 						tableTds
 					);
 				});

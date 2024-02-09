@@ -359,6 +359,7 @@ class FilterableTable extends React.Component {
 				className={this.props.tableClassName}
 				tableProps={this.props.tableProps}
 				trClassName={this.props.trClassName}
+				trProps={this.props.trProps}
 				style={this.props.style}
 				showHeaderFilters={this.props.showHeaderFilters}
 				onRowClicked={this.props.onRowClicked}
